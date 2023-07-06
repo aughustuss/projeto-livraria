@@ -1,0 +1,47 @@
+<main class="w-screen min-h-screen flex flex-col justify-center items-center">
+    <div class="h-[600px] w-[340px] rounded-md flex flex-col gap-y-4 p-4 items-center">
+        <h1 class="text-4xl font-bold">Crie sua conta agora</h1>
+        <form class="w-full">
+
+            <mat-form-field class="w-full">
+                <mat-label>Primeiro nome</mat-label>
+                <input type="text" matInput placeholder="johnDoe@email.com">
+            </mat-form-field>
+
+            <mat-form-field class="w-full">
+                <mat-label>Último nome</mat-label>
+                <input type="text" matInput placeholder="johnDoe@email.com">
+            </mat-form-field>
+
+            <mat-form-field class="w-full">
+                <mat-label>Email</mat-label>
+                <input type="text" matInput placeholder="johnDoe@email.com">
+            </mat-form-field>
+
+            <mat-form-field class="w-full">
+                <mat-label>Senha</mat-label>
+                <input [type]="hidePass ? 'password' : 'text'" matInput placeholder="12356789...">
+                <button (click)="hidePass = !hidePass" matSuffix mat-icon-button>
+                    <mat-icon>{{hidePass ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <mat-form-field class="w-full">
+                <mat-label>Confirme sua senha</mat-label>
+                <input [type]="hideConfirmPass ? 'password' : 'text'" matInput placeholder="12356789...">
+                <button (click)="hideConfirmPass = !hideConfirmPass" matSuffix mat-icon-button>
+                    <mat-icon>{{hideConfirmPass ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+            <button type="submit" class="w-full" mat-flat-button color="primary">
+                Cadastrar
+            </button>
+        </form>
+        <div class="self-end text-xs">
+            Já possui uma conta? <a class="underline" routerLink="/login">Entre agora!</a>
+        </div>
+    </div>
+    <button routerLink="" class="absolute left-0 top-0 underline p-2">
+        Início
+    </button>
+</main>

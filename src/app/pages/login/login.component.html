@@ -1,0 +1,27 @@
+<main class="w-screen min-h-screen flex flex-col justify-center items-center">
+    <div class="h-[400px] w-[340px] rounded-md flex flex-col gap-y-4 p-4 items-center">
+        <h1 class="text-4xl font-extrabold">Faça o seu login</h1>
+        <form class="w-full">
+            <mat-form-field class="w-full">
+                <mat-label>Email</mat-label>
+                <input type="text" matInput placeholder="johnDoe@email.com">
+            </mat-form-field>
+            <mat-form-field class="w-full">
+                <mat-label >Senha</mat-label>
+                <input [type]="hidePass ? 'password' : 'text'" matInput placeholder="12356789...">
+                <button (click)="hidePass = !hidePass" matSuffix mat-icon-button>
+                    <mat-icon>{{hidePass ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+            <button type="submit" class="w-full" color="primary" mat-flat-button>
+                Entrar
+            </button>
+        </form>
+        <div class="self-end text-xs">
+            Ainda não possui uma conta? <a class="underline" routerLink="/register">Crie uma agora!</a>
+        </div>
+    </div>
+    <button routerLink="" class="absolute left-0 top-0 underline p-2">
+        Início
+    </button>
+</main>

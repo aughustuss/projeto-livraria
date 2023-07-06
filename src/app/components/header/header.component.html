@@ -1,0 +1,23 @@
+<mat-toolbar class=" bg-primary sticky z-50 border border-b-secondary border-r-0 border-l-0 border-t-0 text-textColor">
+    <nav class="flex flex-row items-center justify-between w-full">
+        <button (click)="sideNavToggled.emit()" mat-icon-button>
+            <mat-icon>menu</mat-icon>
+        </button>
+        <h1 routerLink="/home">
+            Logo
+        </h1>
+        <button mat-icon-button [matMenuTriggerFor]="accMenu">
+            <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #accMenu="matMenu">
+            <button routerLink="/login" mat-menu-item>
+                <mat-icon>login</mat-icon>
+                <span>Login</span>
+            </button>
+            <button routerLink="/library" mat-menu-item>
+                <mat-icon>apps</mat-icon>
+                <span>Configurações</span>
+            </button>
+        </mat-menu>
+    </nav>
+</mat-toolbar>
