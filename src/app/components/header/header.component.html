@@ -1,6 +1,6 @@
 <mat-toolbar class=" bg-primary sticky z-50 border border-b-secondary border-r-0 border-l-0 border-t-0 text-textColor">
     <nav class="flex flex-row items-center justify-between w-full">
-        <button (click)="sideNavToggled.emit()" mat-icon-button>
+        <button (click)="toggleSidenav()" mat-icon-button>
             <mat-icon>menu</mat-icon>
         </button>
         <h1 routerLink="/home">
@@ -21,3 +21,11 @@
         </mat-menu>
     </nav>
 </mat-toolbar>
+<aside [ngClass]="{'-translate-x-full ':!isToggled, 'translate-x-0 ':isToggled}" class="fixed h-full bg-offWhite border-r border-borderColor w-[260px] z-40 transition-all duration-300">
+    <mat-nav-list>
+        <mat-list-item *ngFor="let item of navItems" class="w-full text-sm" routerLink="{{item.link}}">
+            <mat-icon matListItemIcon>{{item.icon}}</mat-icon>
+            <div matListItemTitle>{{item.title}}</div>
+        </mat-list-item>
+    </mat-nav-list>
+</aside>

@@ -1,6 +1,6 @@
 <app-header *ngIf="showHeader" (sideNavToggled)="toggleSideNav()"></app-header>
 
-<mat-sidenav-container class="h-full fixed">
+<!-- <mat-sidenav-container class="h-full fixed">
   <mat-sidenav *ngIf="showSideNav" [(opened)]="isSemiToggled" [ngClass]="{'w-[250px] ':isToggled, 'w-[60px]':!isToggled}" class="h-full bg-white border-borderColor transition-all duration-300" mode="side">
     <mat-nav-list>
       <mat-list-item *ngFor="let item of navItems" routerLink="{{item.link}}" class="text-sm">
@@ -12,6 +12,8 @@
   <mat-sidenav-content>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
-</mat-sidenav-container>
+</mat-sidenav-container> -->
+
+<router-outlet></router-outlet>
 
 <app-footer *ngIf="showFooter"></app-footer>

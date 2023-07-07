@@ -1,37 +1,42 @@
 <main class="w-screen min-h-screen flex flex-col justify-center items-center">
     <div class="h-[600px] w-[340px] rounded-md flex flex-col gap-y-4 p-4 items-center">
         <h1 class="text-4xl font-bold">Crie sua conta agora</h1>
-        <form class="w-full">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="w-full">
 
             <mat-form-field class="w-full">
                 <mat-label>Primeiro nome</mat-label>
-                <input type="text" matInput placeholder="johnDoe@email.com">
+                <input formControlName='FirstName' type="text" matInput placeholder="John">
+                <mat-error class="text-xs" *ngIf="FirstName.invalid">{{getFirstNameError()}}</mat-error>
             </mat-form-field>
 
             <mat-form-field class="w-full">
                 <mat-label>Último nome</mat-label>
-                <input type="text" matInput placeholder="johnDoe@email.com">
+                <input formControlName='LastName' type="text" matInput placeholder="Doe">
+                <mat-error class="text-xs" *ngIf="LastName.invalid">{{getLastNameError()}}</mat-error>
             </mat-form-field>
 
             <mat-form-field class="w-full">
                 <mat-label>Email</mat-label>
-                <input type="text" matInput placeholder="johnDoe@email.com">
+                <input formControlName="Email" type="text" matInput placeholder="johnDoe@email.com">
+                <mat-error class="text-xs" *ngIf="Email.invalid">{{getEmailError()}}</mat-error>
             </mat-form-field>
 
             <mat-form-field class="w-full">
                 <mat-label>Senha</mat-label>
-                <input [type]="hidePass ? 'password' : 'text'" matInput placeholder="12356789...">
-                <button (click)="hidePass = !hidePass" matSuffix mat-icon-button>
+                <input formControlName="Password" [type]="hidePass ? 'password' : 'text'" matInput placeholder="12356789...">
+                <button type="button" (click)="hidePass = !hidePass" matSuffix mat-icon-button>
                     <mat-icon>{{hidePass ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
+                <mat-error class="text-xs" *ngIf="Password.invalid">{{getPasswordError()}}</mat-error>
             </mat-form-field>
 
             <mat-form-field class="w-full">
                 <mat-label>Confirme sua senha</mat-label>
-                <input [type]="hideConfirmPass ? 'password' : 'text'" matInput placeholder="12356789...">
-                <button (click)="hideConfirmPass = !hideConfirmPass" matSuffix mat-icon-button>
+                <input formControlName="ConfirmPassword" [type]="hideConfirmPass ? 'password' : 'text'" matInput placeholder="12356789...">
+                <button type="button" (click)="hideConfirmPass = !hideConfirmPass" matSuffix mat-icon-button>
                     <mat-icon>{{hideConfirmPass ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
+                <mat-error class="text-xs" *ngIf="ConfirmPassword.invalid">{{getConfirmPasswordError()}}</mat-error>
             </mat-form-field>
             <button type="submit" class="w-full" mat-flat-button color="primary">
                 Cadastrar

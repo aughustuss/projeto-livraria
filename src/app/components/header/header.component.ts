@@ -7,6 +7,7 @@ import {MatButtonModule} from '@angular/material/button'
 import {MatMenuModule} from '@angular/material/menu'
 import {MatListModule} from '@angular/material/list'
 import { CommonModule } from '@angular/common';
+import { NavItem } from 'src/models';
 
 @Component({
   selector: 'app-header',
@@ -16,10 +17,48 @@ import { CommonModule } from '@angular/common';
 })
 export class HeaderComponent {
   isToggled: boolean = false;
-  @Output() sideNavToggled = new EventEmitter<boolean>();
-
+  
   toggleSidenav(){
     this.isToggled = !this.isToggled;
   }
+
+  navItems: NavItem[] = [
+    {
+      title: "Ver Livros",
+      link: "/books",
+      icon: "book",
+    },
+    {
+      title: "Gerenciar Livros",
+      link: "",
+      icon: "bookmark",
+    },
+    {
+      title: "Gerenciar Categorias",
+      link: "",
+      icon: "settings"
+    },
+    {
+      title: "Retornar Livro",
+      link: "",
+      icon: "assignment_return",
+    },
+    {
+      title: "Gerenciar usuários",
+      link: "",
+      icon: "supervised_user_circle"
+    },
+    {
+      title: "Todos os pedidos",
+      link: "",
+      icon: "folder"
+    },
+    {
+      title: "Meus pedidos",
+      link: "",
+      icon: "folder_shared"
+    },
+  ]
+
 
 }
