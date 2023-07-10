@@ -1,5 +1,5 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit} from '@angular/core';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import {MatToolbarModule} from '@angular/material/toolbar'
 import {MatSidenavModule} from '@angular/material/sidenav'
 import {MatIconModule} from '@angular/material/icon'
@@ -8,6 +8,8 @@ import {MatMenuModule} from '@angular/material/menu'
 import {MatListModule} from '@angular/material/list'
 import { CommonModule } from '@angular/common';
 import { NavItem } from 'src/models';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'app-header',
@@ -15,50 +17,30 @@ import { NavItem } from 'src/models';
   standalone: true,
   imports: [RouterModule, MatToolbarModule, MatSidenavModule, MatIconModule, MatButtonModule, MatMenuModule, CommonModule, MatListModule],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   isToggled: boolean = false;
-  
+  public id: number = 0;
+  public userPayload: any;
+  constructor(
+    private auth: AuthService,
+    private api: ApiService
+  ){}
+
+  ngOnInit(): void {
+    this.userPayload = this.auth.getUserInfoFromStorage();
+    this.id = this.userPayload.nameid;
+  }
+
   toggleSidenav(){
     this.isToggled = !this.isToggled;
   }
 
-  navItems: NavItem[] = [
-    {
-      title: "Ver Livros",
-      link: "/books",
-      icon: "book",
-    },
-    {
-      title: "Gerenciar Livros",
-      link: "",
-      icon: "bookmark",
-    },
-    {
-      title: "Gerenciar Categorias",
-      link: "",
-      icon: "settings"
-    },
-    {
-      title: "Retornar Livro",
-      link: "",
-      icon: "assignment_return",
-    },
-    {
-      title: "Gerenciar usuários",
-      link: "",
-      icon: "supervised_user_circle"
-    },
-    {
-      title: "Todos os pedidos",
-      link: "",
-      icon: "folder"
-    },
-    {
-      title: "Meus pedidos",
-      link: "",
-      icon: "folder_shared"
-    },
-  ]
+  isLoggedIn(){
+    return this.auth.isLoggedIn();
+  }
 
+  signOut(){
+    this.auth.signOut();
+  }
 
 }

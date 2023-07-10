@@ -1,25 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import {MatFormFieldModule} from '@angular/material/form-field'
-import {FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms'
 import {MatInputModule} from '@angular/material/input'
 import {MatButtonModule} from '@angular/material/button'
 import {MatIconModule} from '@angular/material/icon'
-import { RouterModule } from '@angular/router';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar'
+
+import {FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators, FormControl, AbstractControlOptions} from '@angular/forms'
+
+import { Router, RouterModule } from '@angular/router';
 import { ConfirmPasswordValidator } from 'src/app/helpers/confirmPassword';
 import { CommonModule } from '@angular/common';
 import ValidateFormFields from 'src/app/helpers/formValidate';
+import { User } from 'src/models';
+import { ApiService } from 'src/app/services/api/api.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatIconModule, RouterModule, CommonModule],
+  imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatIconModule, RouterModule, CommonModule, MatSnackBarModule],
 })
 export class RegisterComponent implements OnInit {
   hidePass: boolean = true;
   hideConfirmPass: boolean = true;
   public registerForm!: FormGroup;
 
-  constructor(private fb: FormBuilder){}
+  constructor(
+    private fb: FormBuilder,
+    private api: ApiService,
+    private snack: MatSnackBar,
+    private route: Router
+    ){}
 
   ngOnInit():void {
     this.registerForm = this.fb.group({
@@ -30,7 +40,7 @@ export class RegisterComponent implements OnInit {
       ConfirmPassword: [null, Validators.required]
     }, {
       validator: ConfirmPasswordValidator("Password", "ConfirmPassword")
-    })
+    } as AbstractControlOptions)
   };
 
   getFirstNameError(){
@@ -77,7 +87,32 @@ export class RegisterComponent implements OnInit {
 
   onSubmit(){
     if(this.registerForm.valid){
-      console.log(this.registerForm.value);
+      let userObj: User = {
+        id: 0,
+        firstName: this.registerForm.get('FirstName')?.value,
+        lastName: this.registerForm.get("LastName")?.value,
+        email: this.registerForm.get("Email")?.value,
+        userRole: 'user',
+        mobile: '',
+        password: this.registerForm.get("Password")?.value,
+        blocked: false,
+        active: false,
+        createdOn: new Date(),
+        fine: 0,
+      };
+      this.api.register(userObj).subscribe({
+        next: (res => {
+          this.snack.open('Conta criada com sucesso.', 'Ok', {
+            duration: 5000,
+            horizontalPosition: 'center',
+          })
+          this.route.navigate(['/login']);
+          this.registerForm.reset();
+        }),
+        error: (err) => {
+          console.log(err);
+        }
+      })
     } else {
       ValidateFormFields.validateAllFormFields(this.registerForm)
     }

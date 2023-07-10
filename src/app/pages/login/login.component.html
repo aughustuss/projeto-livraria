@@ -1,18 +1,24 @@
 <main class="w-screen min-h-screen flex flex-col justify-center items-center">
     <div class="h-[400px] w-[340px] rounded-md flex flex-col gap-y-4 p-4 items-center">
         <h1 class="text-4xl font-extrabold">Faça o seu login</h1>
-        <form class="w-full">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="w-full">
+
+
             <mat-form-field class="w-full">
                 <mat-label>Email</mat-label>
-                <input type="text" matInput placeholder="johnDoe@email.com">
+                <input formControlName="Email" type="email" matInput placeholder="johnDoe@email.com">
+                <mat-error class="text-xs" *ngIf="Email.invalid">{{getEmailError()}}</mat-error>
             </mat-form-field>
+
             <mat-form-field class="w-full">
                 <mat-label >Senha</mat-label>
-                <input [type]="hidePass ? 'password' : 'text'" matInput placeholder="12356789...">
-                <button (click)="hidePass = !hidePass" matSuffix mat-icon-button>
+                <input formControlName="Password" [type]="hidePass ? 'password' : 'text'" matInput placeholder="12356789...">
+                <button type="button" (click)="hidePass = !hidePass" matSuffix mat-icon-button>
                     <mat-icon>{{hidePass ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
+                <mat-error class="text-xs" *ngIf="Password.invalid">{{getPasswordError()}}</mat-error>
             </mat-form-field>
+
             <button type="submit" class="w-full" color="primary" mat-flat-button>
                 Entrar
             </button>
