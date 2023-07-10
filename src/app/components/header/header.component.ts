@@ -20,7 +20,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 export class HeaderComponent implements OnInit {
   isToggled: boolean = false;
   public id: number = 0;
-  public userPayload: any;
+  public userPayload?: any;
   constructor(
     private auth: AuthService,
     private api: ApiService
@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.userPayload = this.auth.getUserInfoFromStorage();
-    this.id = this.userPayload.nameid;
+    this.id = this.userPayload?.nameid;
   }
 
   toggleSidenav(){

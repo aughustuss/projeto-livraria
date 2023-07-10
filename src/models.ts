@@ -28,3 +28,19 @@ export interface Book{
     count?: number;
     author: string;
 }
+
+export interface BookCategory {
+    category: string;
+    subCategory: string;
+    books: Book[];
+}
+
+export interface Order {
+    id: number;
+    userID: number;
+    name: number;
+    bookID: number;
+    bookTitle: string;
+    orderedOn: string;
+    returned: boolean;
+}

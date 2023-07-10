@@ -25,4 +25,16 @@ export class ApiService {
   getAllBooks(){
     return this.http.get<any>(`${this.baseUrl}Books/books`);
   }
+
+  orderBook(userID: number, bookID: number){
+    return this.http.post<any>(`${this.baseUrl}Order/createOrder/${userID}/${bookID}`,{});
+  }
+
+  getUserOrders(userID: number){
+    return this.http.get<any>(`${this.baseUrl}Books/userBooks/${userID}`);
+  };
+
+  getAllOrders(){
+    return this.http.get<any>(`${this.baseUrl}Order/getOrders`);
+  }
 }

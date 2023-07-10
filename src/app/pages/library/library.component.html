@@ -1,20 +1,73 @@
 <section>
-    <mat-tab-group aria-orientation="vertical"  class=" text-sm min-h-screen">
+    <mat-tab-group aria-orientation="vertical" class=" text-sm min-h-screen">
         <mat-tab label="Ver Livros">
-            <div class="p-10 flex flex-col gap-y-5">
-                <mat-card>
+            <div class="p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10 flex flex-col gap-y-5">
+                <mat-form-field class="w-[300px] md:w-[400px] lg:w-[500px] mx-auto">
+                    <mat-label>Procure por um livro</mat-label>
+                    <input (input)="search(searchField.value)" #searchField type="text" matInput>
+                    <button type="button" mat-icon-button matSuffix>
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </mat-form-field>
+
+                <mat-card class="w-fit">
                     <mat-card-content>
-                        Exibindo resultado para 10 livros
+                        Exibindo resultado para {{getBookCount()}} livros
                     </mat-card-content>
                 </mat-card>
                 <mat-accordion multi="true">
-                    <mat-expansion-panel expanded="true">
-    
+                    <mat-expansion-panel expanded="true" *ngFor="let list of bookCategoriesToDisplay">
+
                         <mat-expansion-panel-header>
-                            <mat-panel-title>Categoria</mat-panel-title>
+                            <mat-panel-title class="text-primary font-bold text-base">{{list.category |
+                                titlecase}}</mat-panel-title>
+                            <mat-panel-description>{{list.subCategory | titlecase}}</mat-panel-description>
                         </mat-expansion-panel-header>
-    
-                    
+
+                        <table mat-table [dataSource]="list.books">
+
+                            <ng-container matColumnDef="id">
+                                <th mat-header-cell *matHeaderCellDef>ID</th>
+                                <td mat-cell *matCellDef="let el">{{el.id}}</td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="title">
+                                <th mat-header-cell *matHeaderCellDef>Título do Livro</th>
+                                <td mat-cell *matCellDef="let el">{{el.title}}</td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="author">
+                                <th mat-header-cell *matHeaderCellDef>Autor do Livro</th>
+                                <td mat-cell *matCellDef="let el">{{el.author}}</td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="price">
+                                <th mat-header-cell *matHeaderCellDef>Preço</th>
+                                <td mat-cell *matCellDef="let el">{{el.price}}</td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="available">
+                                <th mat-header-cell *matHeaderCellDef>Disponibilidade</th>
+                                <td mat-cell *matCellDef="let el">
+                                    {{!el.ordered ? 'Disponível' : 'Não disponível'}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="order">
+                                <th mat-header-cell *matHeaderCellDef>Pedir</th>
+                                <td mat-cell *matCellDef="let el">
+                                    <button (click)="orderBook(userID, el.id)" mat-flat-button color="primary"
+                                        [disabled]="el.ordered">
+                                        Pedir
+                                    </button>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                        </table>
+
                     </mat-expansion-panel>
                 </mat-accordion>
             </div>
@@ -39,7 +92,44 @@
 
         </mat-tab>
         <mat-tab label="Meus Pedidos">
+            <div class="p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10">
 
+                <table mat-table [dataSource]="userOrders" >
+
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef>ID do pedido</th>
+                        <td mat-cell *matCellDef="let el">{{el.id}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="title">
+                        <th mat-header-cell *matHeaderCellDef>Título do livro</th>
+                        <td mat-cell *matCellDef="let el">{{el.title}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="author">
+                        <th mat-header-cell *matHeaderCellDef>Autor do livro</th>
+                        <td mat-cell *matCellDef="let el">{{el.author}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="price">
+                        <th mat-header-cell *matHeaderCellDef>Preço do livro</th>
+                        <td mat-cell *matCellDef="let el">{{el.price}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="category">
+                        <th mat-header-cell *matHeaderCellDef>Categoria do livro</th>
+                        <td mat-cell *matCellDef="let el">{{el.category}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ordered">
+                        <th mat-header-cell *matHeaderCellDef>Pedido devolvido</th>
+                        <td mat-cell *matCellDef="let el">{{el.ordered ? 'Não' : 'Sim'}}</td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="userOrdersColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: userOrdersColumns"></tr>
+                </table>
+            </div>
         </mat-tab>
     </mat-tab-group>
 </section>
