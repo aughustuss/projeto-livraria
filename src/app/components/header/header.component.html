@@ -9,7 +9,7 @@
         <button mat-icon-button [matMenuTriggerFor]="accMenu">
             <mat-icon>account_circle</mat-icon>
         </button>
-        <mat-menu #accMenu="matMenu">
+        <mat-menu #accMenu="matMenu" class="text-sm">
             <button *ngIf="!isLoggedIn()" routerLink="/login" mat-menu-item>
                 <mat-icon >login</mat-icon>
                 <span>Login</span>
@@ -22,9 +22,9 @@
                 <mat-icon>apps</mat-icon>
                 <span>Configurações</span>
             </button>
-            <button *ngIf="isLoggedIn()" routerLink="/profile/{{id}}" mat-menu-item>
+            <button *ngIf="isLoggedIn()" routerLink="/profile/{{id}}" mat-menu-item >
                 <mat-icon>account_circle</mat-icon>
-                <span>Minha Conta</span>
+                <span >Minha Conta</span>
             </button>
         </mat-menu>
     </nav>

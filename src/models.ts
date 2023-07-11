@@ -42,5 +42,5 @@ export interface Order {
     bookID: number;
     bookTitle: string;
     orderedOn: string;
-    returned: boolean;
+    ordered: boolean;
 }

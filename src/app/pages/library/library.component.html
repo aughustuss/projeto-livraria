@@ -57,7 +57,7 @@
                                 <th mat-header-cell *matHeaderCellDef>Pedir</th>
                                 <td mat-cell *matCellDef="let el">
                                     <button (click)="orderBook(userID, el.id)" mat-flat-button color="primary"
-                                        [disabled]="el.ordered">
+                                        [disabled]="el.ordered || isBlocked()">
                                         Pedir
                                     </button>
                                 </td>
@@ -83,21 +83,167 @@
 
         </mat-tab>
         <mat-tab label="Retornar Livro ">
+            <div class="p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10">
+                <form (ngSubmit)="onSubmit()" [formGroup]="returnBookForm" class="flex flex-col w-full md:w-[420px] lg:w-[700px] rounded-md shadow-sm mx-auto">
+                    <mat-error class="text-xs" *ngIf="returnBookFormErrMsg.length > 0">{{returnBookFormErrMsg}}</mat-error>
 
+                    <mat-form-field>
+                        <mat-label>ID do pedido</mat-label>
+                        <input matInput formControlName="OrderID" type="text">
+                        <mat-icon matSuffix>
+                            assignment
+                        </mat-icon>
+                        <mat-error class="text-xs" *ngIf="OrderID.invalid">{{getOrderIDError()}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>ID do usuário</mat-label>
+                        <input formControlName="UserID" type="text" matInput>
+                        <mat-icon matSuffix>
+                            menu_book
+                        </mat-icon>
+                        <mat-error class="text-xs" *ngIf="UserID.invalid">{{getUserIDError()}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>ID do livro</mat-label>
+                        <input formControlName="BookID" type="text" matInput>
+                        <mat-icon matSuffix>
+                            account_circle
+                        </mat-icon>
+                        <mat-error class="text-xs" *ngIf="BookID.invalid">{{getBookIDError()}}</mat-error>
+                    </mat-form-field>
+
+                    <button type="submit" mat-flat-button color="primary">
+                        Retornar
+                    </button>
+                </form>
+            </div>
         </mat-tab>
         <mat-tab label="Gerenciar Usuários">
+            <div class="p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10">
+                
+                <table mat-table [dataSource]="usersToDisplay">
 
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef>ID do usuário</th>
+                        <td mat-cell *matCellDef="let el">{{el.id}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef>Nome do usuário</th>
+                        <td mat-cell *matCellDef="let el">{{el.firstName}} {{" "}} {{el.lastName}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef>Email do usuário</th>
+                        <td mat-cell *matCellDef="let el">{{el.email}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="mobile">
+                        <th mat-header-cell *matHeaderCellDef>Telefone do usuário</th>
+                        <td mat-cell *matCellDef="let el">{{el.mobile}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="fine">
+                        <th mat-header-cell *matHeaderCellDef>Multa</th>
+                        <td mat-cell *matCellDef="let el">{{el.fine}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="blocked">
+                        <th mat-header-cell *matHeaderCellDef>Está bloqueado</th>
+                        <td mat-cell *matCellDef="let el">{{el.blocked ? 'Sim' : 'Não'}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="active">
+                        <th mat-header-cell *matHeaderCellDef>Está ativo</th>
+                        <td mat-cell *matCellDef="let el">{{!el.active? 'Sim' : 'Não'}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="created on">
+                        <th mat-header-cell *matHeaderCellDef>Criado em</th>
+                        <td mat-cell *matCellDef="let el">{{el.createdOn | date:'dd-MMM-YYYY'}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef>Ação</th>
+                        <td mat-cell *matCellDef="let el">
+                            <div class="gap-2 flex flex-row">
+                                <button (click)="blockUser(el)" mat-flat-button color="primary">
+                                    {{el.blocked ? 'Desbloquear' : 'Bloquear'}}
+                                </button>
+                                <button mat-flat-button color="primary">
+                                    {{el.active ? 'Ativar' : 'Desativar'}}
+                                </button>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="allUsersColumns" ></tr>
+                    <tr mat-row *matRowDef="let row; columns: allUsersColumns"></tr>
+                </table>
+
+            </div>
         </mat-tab>
         <mat-tab label="Todos os Pedidos">
+            <div class="p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10 flex flex-col justify-center items-center">
+                <mat-button-toggle-group #actions="matButtonToggleGroup">
+                    <mat-button-toggle value="allBooks" checked (change)="filterOrder(actions.value)">Todos</mat-button-toggle>
+                    <mat-button-toggle value="pendingBooks" (change)="filterOrder(actions.value)">Pendentes</mat-button-toggle>
+                    <mat-button-toggle value="returnedBooks" (change)="filterOrder(actions.value)">Retornados</mat-button-toggle>
+                </mat-button-toggle-group>
 
+                <table mat-table [dataSource]="ordersToDisplay">
+
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef>ID do pedido</th>
+                        <td mat-cell *matCellDef="let el">{{el.id}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="userID">
+                        <th mat-header-cell *matHeaderCellDef>ID do usuário</th>
+                        <td mat-cell *matCellDef="let el">{{el.userID}}</td>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="bookID">
+                        <th mat-header-cell *matHeaderCellDef>ID do livro</th>
+                        <td mat-cell *matCellDef="let el">{{el.bookID}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef>Nome do usuário</th>
+                        <td mat-cell *matCellDef="let el">{{el.firstName}} {{" "}} {{el.lastName}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="book">
+                        <th mat-header-cell *matHeaderCellDef>Nome do Livro</th>
+                        <td mat-cell *matCellDef="let el">{{el.title}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="date">
+                        <th mat-header-cell *matHeaderCellDef>Data do pedido</th>
+                        <td mat-cell *matCellDef="let el">{{el.orderDate | date:'dd-MMM-YYYY'}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="returned">
+                        <th mat-header-cell *matHeaderCellDef>Retornado</th>
+                        <td mat-cell *matCellDef="let el">{{el.ordered ? 'Não' : 'Sim'}}</td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="allOrdersColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: allOrdersColumns"></tr>
+
+                </table>
+
+            </div>
         </mat-tab>
         <mat-tab label="Meus Pedidos">
             <div class="p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10">
 
-                <table mat-table [dataSource]="userOrders" >
+                <table mat-table [dataSource]="userOrders">
 
                     <ng-container matColumnDef="id">
-                        <th mat-header-cell *matHeaderCellDef>ID do pedido</th>
+                        <th mat-header-cell *matHeaderCellDef>ID do livro</th>
                         <td mat-cell *matCellDef="let el">{{el.id}}</td>
                     </ng-container>
 

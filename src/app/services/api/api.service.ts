@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { User } from 'src/models';
 
@@ -36,5 +37,25 @@ export class ApiService {
 
   getAllOrders(){
     return this.http.get<any>(`${this.baseUrl}Order/getOrders`);
+  };
+
+  returnBook(userID: number, bookID: number, orderID: number,){
+    return this.http.put<any>(`${this.baseUrl}Books/returnBook/${userID}/${bookID}/${orderID}`, {});
+  }
+
+  getAllUsers(){
+    return this.http.get<any[]>(`${this.baseUrl}User/users`);
+  }
+
+  blockUser(userID: number){
+    return this.http.put<any>(`${this.baseUrl}User/blockUser/${userID}`, {});
+  };
+  
+  unblockUser(userID: number){
+    return this.http.put<any>(`${this.baseUrl}User/unblockUser/${userID}`, {});
+  }
+
+  enableUser(id: number){
+
   }
 }

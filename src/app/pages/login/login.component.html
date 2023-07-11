@@ -2,7 +2,7 @@
     <div class="h-[400px] w-[340px] rounded-md flex flex-col gap-y-4 p-4 items-center">
         <h1 class="text-4xl font-extrabold">Faça o seu login</h1>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="w-full">
-
+            <mat-error class="text-xs" *ngIf="loginErrorMsg.length > 0">{{loginErrorMsg}}</mat-error>
 
             <mat-form-field class="w-full">
                 <mat-label>Email</mat-label>

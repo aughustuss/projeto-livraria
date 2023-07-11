@@ -3,6 +3,7 @@
         <h1 class="text-4xl font-bold">Crie sua conta agora</h1>
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="w-full">
 
+            <mat-error *ngIf="registerFormErrMsg.length > 0">{{registerFormErrMsg}}</mat-error>
             <mat-form-field class="w-full">
                 <mat-label>Primeiro nome</mat-label>
                 <input formControlName='FirstName' type="text" matInput placeholder="John">

@@ -19,6 +19,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class LoginComponent implements OnInit {
   hidePass: boolean = true;
   public loginForm!: FormGroup
+  loginErrorMsg: string = "";
   constructor(
     private fb: FormBuilder,
     private route: Router,
@@ -63,7 +64,7 @@ export class LoginComponent implements OnInit {
           this.route.navigate(['']);
         }),
         error: (err) => {
-          console.log(err);
+          this.loginErrorMsg = err.error.message;
         }
       })
     } else {

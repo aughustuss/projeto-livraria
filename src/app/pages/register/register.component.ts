@@ -23,6 +23,7 @@ export class RegisterComponent implements OnInit {
   hidePass: boolean = true;
   hideConfirmPass: boolean = true;
   public registerForm!: FormGroup;
+  registerFormErrMsg: string = "";
 
   constructor(
     private fb: FormBuilder,
@@ -110,7 +111,7 @@ export class RegisterComponent implements OnInit {
           this.registerForm.reset();
         }),
         error: (err) => {
-          console.log(err);
+          this.registerFormErrMsg = err.error.message;
         }
       })
     } else {
