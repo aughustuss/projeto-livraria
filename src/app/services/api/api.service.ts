@@ -57,5 +57,9 @@ export class ApiService {
 
   enableUser(id: number){
 
+  };
+
+  deleteBookByID(bookID: number){
+    return this.http.delete<any>(`${this.baseUrl}Books/deleteBook/${bookID}`);
   }
 }

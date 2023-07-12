@@ -1,0 +1,8 @@
+<h2 mat-dialog-title class="font-bold">Excluir livro</h2>
+<div matDialogContent>
+    <p class="text-sm">Tem certeza que deseja exclui o livro de ID {{data.bookID}}?</p>
+</div>
+<div mat-dialog-actions align="end" class="text-sm">
+    <button mat-flat-button color="accent" type="submit" (click)="deleteBook(data.bookID)">Excluir</button>
+    <button mat-stroked-button color="primary" (click)="onClose()">Cancelar</button>
+</div>

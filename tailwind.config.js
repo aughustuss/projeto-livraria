@@ -11,6 +11,7 @@ module.exports = {
         textColor: '#f1f1f1',
         borderColor: 'rgba(0,0,0,.2)',
         offWhite: '#fafafa',
+        backGroundColor: 'rgba(0, 0, 0, 0.32)'
       }
     },
   },

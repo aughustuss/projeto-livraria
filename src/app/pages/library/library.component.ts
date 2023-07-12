@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
@@ -15,6 +15,10 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import ValidateFormFields from 'src/app/helpers/formValidate';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from 'src/app/components/dialog/dialog.component';
+import { MessagesService } from 'src/app/services/messages/messages.service';
+
 @Component({
   selector: 'app-library',
   templateUrl: './library.component.html',
@@ -23,7 +27,13 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 })
 export class LibraryComponent implements OnInit {
   public returnBookForm!: FormGroup;
+  public registerBookForm!: FormGroup;
+  public deleteBookForm!: FormGroup;
+  
+
   returnBookFormErrMsg: string = "";
+  deleteBookErrMsg: string = "";
+  
   userData: any;
   availableBooks: Book[] = [];
   bookCategoriesToDisplay: BookCategory[] = [];
@@ -37,7 +47,7 @@ export class LibraryComponent implements OnInit {
     'available',
     'order'
   ]
-
+  
   userOrdersColumns: string[] = [
     'id',
     'title',
@@ -45,9 +55,9 @@ export class LibraryComponent implements OnInit {
     'price',
     'ordered'
   ]
-
+  
   userOrders: Book[] = [];
-
+  
   ordersToDisplay: Order[] = [];
   listOfOrders: Order[] = [];
   allOrdersColumns: string[] = [
@@ -59,7 +69,7 @@ export class LibraryComponent implements OnInit {
     'date',
     'returned'
   ];
-
+  
   usersToDisplay: User[] = [];
   allUsersColumns: string[] = [
     'id',
@@ -77,10 +87,12 @@ export class LibraryComponent implements OnInit {
     private api: ApiService,
     private auth: AuthService,
     private fb: FormBuilder,
-    private snack: MatSnackBar
-  ) { }
-
-  ngOnInit(): void {
+    private snack: MatSnackBar,
+    public dialog: MatDialog,
+    private msg: MessagesService
+    ) { }
+    
+    ngOnInit(): void {
     this.userPayload = this.auth.getUserInfoFromStorage();
     this.userID = this.userPayload?.nameid;
     this.api.getUserInfo(this.userID).subscribe({
@@ -96,9 +108,27 @@ export class LibraryComponent implements OnInit {
       BookID: ['', Validators.required],
       OrderID: ['', Validators.required]
     });
+    this.deleteBookForm = this.fb.group({
+      DeletedBookID: ['', Validators.required],
+    });
+
+    this.registerBookForm = this.fb.group({
+      BookTitle: ['', Validators.compose([Validators.required, Validators.maxLength(40)])],
+      BookAuthor: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
+      BookPrice: ['', Validators.required],
+      BookCategory: ['', Validators.compose([Validators.required, Validators.maxLength(30)])],
+    })
   };
-  isBlocked(){
-    let blocked = this.userData.blocked;
+
+  openDialog() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: { bookID: this.DeletedBookID.value, deleteBookErrMsg: this.deleteBookErrMsg},
+    });
+    dialogRef.afterClosed().subscribe(res => this.deleteBookErrMsg = this.msg.getErrorMessage());
+  }
+
+  isBlocked() {
+    let blocked = this.userData?.blocked;
     return blocked;
   }
   getAllBooks(): void {
@@ -206,6 +236,26 @@ export class LibraryComponent implements OnInit {
     return this.returnBookForm.get('OrderID') as FormControl
   }
 
+  get DeletedBookID(): FormControl {
+    return this.deleteBookForm.get('DeletedBookID') as FormControl
+  }
+
+  get BookTitle(): FormControl{
+    return this.registerBookForm.get('BookTitle') as FormControl
+  }
+
+  get BookAuthor(): FormControl {
+    return this.registerBookForm.get('BookAuthor') as FormControl
+  }
+
+  get BookPrice(): FormControl {
+    return this.registerBookForm.get('BookPrice') as FormControl
+  }
+
+  get BookCategory(): FormControl {
+    return this.registerBookForm.get('BookCategory') as FormControl
+  }
+
   getUserIDError() {
     if (this.UserID.hasError('required')) return 'Preencha o ID do usuário'
     return ''
@@ -218,6 +268,11 @@ export class LibraryComponent implements OnInit {
 
   getOrderIDError() {
     if (this.OrderID.hasError('required')) return 'Preencha o ID do pedido'
+    return ''
+  }
+
+  getDeletedBookIDError() {
+    if (this.DeletedBookID.hasError('required')) return 'Preencha o ID do livro'
     return ''
   }
 
@@ -242,7 +297,6 @@ export class LibraryComponent implements OnInit {
   getAllUsers() {
     this.api.getAllUsers().subscribe({
       next: (res) => {
-        console.log(res);
         this.usersToDisplay = res;
       },
       error: (err) => {
@@ -250,7 +304,13 @@ export class LibraryComponent implements OnInit {
       }
     })
   };
+  registerBook(){
+    if(this.registerBookForm.valid){
 
+    } else {
+      ValidateFormFields.validateAllFormFields(this.registerBookForm);
+    }
+  }
   blockUser(user: User) {
     if (user.blocked) {
       this.api.unblockUser(user.id).subscribe({

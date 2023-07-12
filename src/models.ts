@@ -4,8 +4,8 @@ export interface NavItem {
     icon: string;
 }
 
-export interface User{
-    id:number;
+export interface User {
+    id: number;
     firstName: string;
     lastName: string;
     email: string;
@@ -18,7 +18,7 @@ export interface User{
     fine: number;
 }
 
-export interface Book{
+export interface Book {
     id: number;
     title: string;
     category: string;
@@ -43,4 +43,9 @@ export interface Order {
     bookTitle: string;
     orderedOn: string;
     ordered: boolean;
+}
+
+export interface DialogData {
+    bookID: number;
+    deleteBookErrMsg: string;
 }

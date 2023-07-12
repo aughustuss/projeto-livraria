@@ -13,6 +13,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { DialogComponent } from './components/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
     ProfileComponent,
   ],
   imports: [
+    DialogComponent,
     RegisterComponent,
     LoginComponent,
     HeaderComponent,
