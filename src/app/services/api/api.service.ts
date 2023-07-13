@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
-import { User } from 'src/models';
+import { Book, User } from 'src/models';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,10 @@ export class ApiService {
 
   register(user: User){
     return this.http.post<any>(`${this.baseUrl}User/register`, user);
+  }
+
+  registerBook(book: Book, userID: number){
+    return this.http.post<any>(`${this.baseUrl}Books/${userID}/create`, book)
   }
 
   login(user: any){
@@ -30,9 +34,11 @@ export class ApiService {
   orderBook(userID: number, bookID: number){
     return this.http.post<any>(`${this.baseUrl}Order/createOrder/${userID}/${bookID}`,{});
   }
-
-  getUserOrders(userID: number){
+  getUserBooks(userID: number){
     return this.http.get<any>(`${this.baseUrl}Books/userBooks/${userID}`);
+  }
+  getUserOrders(userID: number){
+    return this.http.get<any>(`${this.baseUrl}Order/userOrders/${userID}`);
   };
 
   getAllOrders(){

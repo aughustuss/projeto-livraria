@@ -6,11 +6,9 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   providedIn: 'root'
 })
 export class AuthService {
-  private userPayload: any;
   constructor(
     private router: Router
   ) {
-    this.userPayload = this.getUserInfoFromToken();
   }
 
   setUserToSessionStorage(token: string) {

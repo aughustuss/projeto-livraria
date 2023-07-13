@@ -6,9 +6,10 @@ import { BooksComponent } from './pages/books/books.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { authGuard } from './services/guards/auth.guard';
 
 const routes: Routes = [
-  {path: 'library',component: LibraryComponent},
+  {path: 'library',component: LibraryComponent, canActivate: [authGuard]},
   {path: 'books', component: BooksComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},

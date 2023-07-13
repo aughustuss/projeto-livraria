@@ -72,28 +72,41 @@
                 </mat-accordion>
             </div>
         </mat-tab>
-        <mat-tab label="Gerenciar Livros" class="h-full w-full relative">
+        <mat-tab *ngIf="isAdmin()" label="Gerenciar Livros" class="h-full w-full relative">
             <div class="p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10 flex flex-col lg:flex-row gap-10">
                 <form (ngSubmit)="registerBook()" [formGroup]="registerBookForm" class="flex flex-col w-full flex-1">
                     <h1 class="text-base">Cadastrar novo livro</h1>
+
+                    <mat-error class="text-xs" *ngIf="registerBookErrMsg.length > 0">{{registerBookErrMsg}}</mat-error>
+
                     <mat-form-field>
                         <input formControlName="BookTitle" matInput type="text">
                         <mat-label>Título do livro</mat-label>
+                        <mat-error *ngIf="BookTitle.invalid">{{getBookTitleError()}}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field>
                         <input formControlName="BookAuthor" type="text" matInput>
                         <mat-label>Autor do livro</mat-label>
+                        <mat-error *ngIf="BookAuthor.invalid">{{getBookAuthorError()}}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field>
-                        <input formControlName="BookPrice" type="text" matInput>
+                        <input formControlName="BookPrice" type="number" matInput>
                         <mat-label>Preço do livro</mat-label>
+                        <mat-error *ngIf="BookPrice.invalid">{{getBookPriceError()}}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field>
                         <input formControlName="BookCategory" type="text" matInput>
                         <mat-label>Categoria do livro</mat-label>
+                        <mat-error *ngIf="BookCategory.invalid">{{getBookCategoryError()}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <input formControlName="BookSubCategory" type="text" matInput>
+                        <mat-label>Subcategoria do livro</mat-label>
+                        <mat-error *ngIf="BookSubCategory.invalid">{{getBookSubCategoryError()}}</mat-error>
                     </mat-form-field>
 
                     <button type="submit" mat-flat-button color="primary">
@@ -119,11 +132,7 @@
                 </form>
             </div>
         </mat-tab>
-
-        <mat-tab label="Gerenciar Categorias">
-
-        </mat-tab>
-        <mat-tab label="Retornar Livro ">
+        <mat-tab *ngIf="isAdmin()" label="Retornar Livro ">
             <div class="p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10">
                 <form (ngSubmit)="onSubmit()" [formGroup]="returnBookForm"
                     class="flex flex-col w-full md:w-[420px] lg:w-[700px] rounded-md shadow-sm mx-auto">
@@ -163,7 +172,52 @@
                 </form>
             </div>
         </mat-tab>
-        <mat-tab label="Gerenciar Usuários">
+        
+        <mat-tab *ngIf="isAdmin()" label="Meus livros">
+            <div class="p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10">
+                <table mat-table [dataSource]="userBooks">
+
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef>ID do livro</th>
+                        <td mat-cell *matCellDef="let el">{{el.id}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="title">
+                        <th mat-header-cell *matHeaderCellDef>Título do livro</th>
+                        <td mat-cell *matCellDef="let el">{{el.title}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="author">
+                        <th mat-header-cell *matHeaderCellDef>Autor do livro</th>
+                        <td mat-cell *matCellDef="let el">{{el.author}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="price">
+                        <th mat-header-cell *matHeaderCellDef>Preço do livro</th>
+                        <td mat-cell *matCellDef="let el">{{el.price}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="category">
+                        <th mat-header-cell *matHeaderCellDef>Categoria do livro</th>
+                        <td mat-cell *matCellDef="let el">{{el.category}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="subCategory">
+                        <th mat-header-cell *matHeaderCellDef>Subcategoria do livro</th>
+                        <td mat-cell *matCellDef="let el">{{el.subCategory}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ordered">
+                        <th mat-header-cell *matHeaderCellDef>Livro pedido</th>
+                        <td mat-cell *matCellDef="let el">{{el.ordered ? 'Sim' : 'Não'}}</td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="userBooksColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: userBooksColumns"></tr>
+                </table>
+            </div>
+        </mat-tab>
+        <mat-tab *ngIf="isAdmin()" label="Gerenciar Usuários">
             <div class="p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10">
 
                 <table mat-table [dataSource]="usersToDisplay">
@@ -228,7 +282,7 @@
 
             </div>
         </mat-tab>
-        <mat-tab label="Todos os Pedidos">
+        <mat-tab *ngIf="isAdmin()" label="Todos os Pedidos">
             <div class="p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10 flex flex-col justify-center items-center">
                 <mat-button-toggle-group #actions="matButtonToggleGroup">
                     <mat-button-toggle value="allBooks" checked
@@ -312,6 +366,17 @@
                         <th mat-header-cell *matHeaderCellDef>Categoria do livro</th>
                         <td mat-cell *matCellDef="let el">{{el.category}}</td>
                     </ng-container>
+
+                    <ng-container matColumnDef="subCategory">
+                        <th mat-header-cell *matHeaderCellDef>Subcategoria do livro</th>
+                        <td mat-cell *matCellDef="let el">{{el.subCategory}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="orderDate">
+                        <th mat-header-cell *matHeaderCellDef>Data do pedido</th>
+                        <td mat-cell *matCellDef="let el">{{el.orderDate | date: 'dd-MMM-YYYY'}}</td>
+                    </ng-container>
+
 
                     <ng-container matColumnDef="ordered">
                         <th mat-header-cell *matHeaderCellDef>Pedido devolvido</th>

@@ -16,7 +16,7 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 import ValidateFormFields from 'src/app/helpers/formValidate';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from 'src/app/components/dialog/dialog.component';
+import { DialogComponent } from 'src/app/components/dialog/dialog.component'; 
 import { MessagesService } from 'src/app/services/messages/messages.service';
 
 @Component({
@@ -33,6 +33,7 @@ export class LibraryComponent implements OnInit {
 
   returnBookFormErrMsg: string = "";
   deleteBookErrMsg: string = "";
+  registerBookErrMsg: string = "";
   
   userData: any;
   availableBooks: Book[] = [];
@@ -48,16 +49,29 @@ export class LibraryComponent implements OnInit {
     'order'
   ]
   
+  userOrders: Book[] = [];
   userOrdersColumns: string[] = [
     'id',
     'title',
     'author',
     'price',
-    'ordered'
+    'category',
+    'subCategory',
+    'orderDate',
+    'ordered',
   ]
   
-  userOrders: Book[] = [];
-  
+  userBooks: Book[] = [];
+  userBooksColumns: string[] = [
+    'id',
+    'title',
+    'author',
+    'price',
+    'ordered',
+    'category',
+    'subCategory'
+  ]
+
   ordersToDisplay: Order[] = [];
   listOfOrders: Order[] = [];
   allOrdersColumns: string[] = [
@@ -101,6 +115,7 @@ export class LibraryComponent implements OnInit {
     });
     this.getAllBooks();
     this.getUserOrders(this.userID);
+    this.getUserBooks(this.userID)
     this.getAllOrders();
     this.getAllUsers();
     this.returnBookForm = this.fb.group({
@@ -117,6 +132,7 @@ export class LibraryComponent implements OnInit {
       BookAuthor: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
       BookPrice: ['', Validators.required],
       BookCategory: ['', Validators.compose([Validators.required, Validators.maxLength(30)])],
+      BookSubCategory: ['', Validators.compose([Validators.required, Validators.maxLength(30)])],
     })
   };
 
@@ -126,7 +142,9 @@ export class LibraryComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(res => this.deleteBookErrMsg = this.msg.getErrorMessage());
   }
-
+  isAdmin(): boolean{
+    return this.userPayload?.role === 'admin'  
+  }
   isBlocked() {
     let blocked = this.userData?.blocked;
     return blocked;
@@ -202,6 +220,17 @@ export class LibraryComponent implements OnInit {
     });
   };
 
+  getUserBooks(userID: number){
+    this.api.getUserBooks(userID).subscribe({
+      next: (res: Book[]) => {
+        this.userBooks = res;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
   getAllOrders() {
     this.api.getAllOrders().subscribe({
       next: (res: Order[]) => {
@@ -256,6 +285,10 @@ export class LibraryComponent implements OnInit {
     return this.registerBookForm.get('BookCategory') as FormControl
   }
 
+  get BookSubCategory(): FormControl {
+    return this.registerBookForm.get('BookSubCategory') as FormControl
+  }
+
   getUserIDError() {
     if (this.UserID.hasError('required')) return 'Preencha o ID do usuário'
     return ''
@@ -274,6 +307,31 @@ export class LibraryComponent implements OnInit {
   getDeletedBookIDError() {
     if (this.DeletedBookID.hasError('required')) return 'Preencha o ID do livro'
     return ''
+  }
+
+  getBookTitleError(){
+    if(this.BookTitle.hasError('required')) return 'Preencha o nome do livro'
+    return this.BookTitle.hasError('maxLength') ? 'Máximo de 40 caractéres': ''
+  }
+
+  getBookAuthorError(){
+    if(this.BookAuthor.hasError('required')) return 'Preencha o nome do autor'
+    return this.BookAuthor.hasError('maxLength') ? 'Máximod e 50 caractéres' : ''
+  }
+
+  getBookPriceError(){
+    if(this.BookPrice.hasError('required')) return 'Preencha o preço do livro'
+    return ''
+  }
+
+  getBookCategoryError(){
+    if(this.BookCategory.hasError('required')) return 'Preencha a categoria do livro'
+    return this.BookCategory.hasError('maxLength') ? 'Máximo de 30 caractéres' : ''
+  }
+
+  getBookSubCategoryError(){
+    if(this.BookSubCategory.hasError('required')) return 'Preencha a subcategoria do livro'
+    return this.BookSubCategory.hasError('maxLength') ? 'Máximo de 30 caractéres' : ''
   }
 
   onSubmit() {
@@ -306,7 +364,28 @@ export class LibraryComponent implements OnInit {
   };
   registerBook(){
     if(this.registerBookForm.valid){
-
+      let bookObj: Book = {
+        id: 0,
+        title: this.registerBookForm.get('BookTitle')?.value,
+        category: this.registerBookForm.get('BookCategory')?.value,
+        subCategory: this.registerBookForm.get('BookSubCategory')?.value,
+        price: this.registerBookForm.get('BookPrice')?.value,
+        available: true,
+        count: 1,
+        author: this.registerBookForm.get('BookAuthor')?.value,
+      };
+      this.api.registerBook(bookObj, this.userID).subscribe({
+        next: (res) => {
+          this.snack.open("Livro cadastrado com sucesso.", "OK", {
+            duration: 5000,
+            horizontalPosition: 'center',
+          });
+          this.registerBookForm.reset();
+        },
+        error: (err) => {
+          this.registerBookErrMsg = err.error.message;
+        }
+      })
     } else {
       ValidateFormFields.validateAllFormFields(this.registerBookForm);
     }
