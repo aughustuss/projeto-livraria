@@ -1,3 +1,51 @@
-<main class="min-h-screen">
-    
-</main>
+<section class="min-h-screen flex flex-col w-full">
+    <div class="flex flex-col lg:flex-row pt-28 w-full justify-between">
+        <div class="flex flex-1 max-w-xl p-5">
+            <div class="flex flex-col gap-y-5 w-full">
+                <p class="text-xs uppercase text-secondaryTextColor font-bodyFont flex flex-row items-center gap-x-3">
+                    <span class="text-tertiary font-extrabold">|</span> Books Management System
+                </p>
+                <div class="flex flex-col text-6xl leading-tight w-full font-headingFont">
+                    Impulsione os seus negócios. Adentre na nova geração de gerenciamento inteligente.
+                </div>
+                <div class="text-secondaryTextColor font-bodyFont">
+                    <p class="text-xs md:text-sm lg:text-base">O BMS é a solução que te ajuda a manter o controle de
+                        todas as funcionalidades de sua livraria. Obtenha a
+                        autonomia e velocidade que está buscando em seu negócio.</p>
+                    <button routerLink="/register"
+                        class="text-sm font-bodyFont bg-tertiary text-black flex flex-row items-center gap-x-2 py-2 px-3 rounded-md border border-primary hover:bg-tertiary/80 transition duration-200">
+                        <span>Começar agora</span>
+                        <mat-icon>arrow_right_alt</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="px-5 bg-secondary rounded-l-xl pt-20 w-[700px] h-[700px] shadow-md shadow-secondary/40">
+            <img src="../../../assets/reading.png" class="w-full h-full object-contain flex flex-1">
+        </div>
+    </div>
+    <div class="bg-secondary h-auto w-full mt-14">
+        <div class="p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10 flex flex-col gap-y-20">
+            <div class="flex flex-col gap-4">
+                <p class="text-sm md:text-lg lg:text-2xl text-offWhite font-semibold">Vantagens</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-2">
+                    <div *ngFor="let item of advantages"
+                        class="h-[120px] w-full bg-secondaryLigth rounded-xl hover:shadow-md hover:shadow-secondary/40 flex flex-row p-5 gap-x-4 items-center text-offWhite cursor-pointer transition duration-200">
+                        <div
+                            class="p-1 bg-tertiary text-black flex flex-col justify-center items-center rounded-xl h-16 w-16">
+                            <mat-icon class="scale-150">{{item.icon}}</mat-icon>
+                        </div>
+                        <div class="flex flex-col gap-y-2 justify-between max-w-[280px]">
+                            <p class="text-[11px] text-offWhite/80 uppercase font-bodyFont tracking-wide">{{item.title}}
+                            </p>
+                            <p class="text-sm">{{item.content}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                Mais coisa
+            </div>
+        </div>
+    </div>
+</section>

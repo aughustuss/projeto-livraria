@@ -1,6 +1,7 @@
 <main class="min-h-screen pt-24">
-    <div *ngIf="isLoadingData" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-        <mat-spinner style="height: 40px; width: 40px;" ></mat-spinner>
+    <div *ngIf="isLoadingData"
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+        <mat-spinner style="height: 40px; width: 40px;"></mat-spinner>
         <p class="text-xs">Carregando informações</p>
     </div>
     <div *ngIf="!isLoadingData" class="p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10 gap-4 flex flex-col">
@@ -8,7 +9,7 @@
             <mat-card-header class="text-sm">
                 <mat-card-subtitle>ID</mat-card-subtitle>
             </mat-card-header>
-            <mat-card-content>
+            <mat-card-content class="text-xs md:text-sm">
                 {{userData?.id}}
             </mat-card-content>
         </mat-card>
@@ -17,15 +18,16 @@
                 <mat-card-header class="text-sm">
                     <mat-card-subtitle>Nome</mat-card-subtitle>
                 </mat-card-header>
-                <mat-card-content>
-                    {{userData?.firstName}}{{" "}}{{userData?.lastName}}
+                <mat-card-content class="text-xs md:text-sm">
+                    {{userData?.firstName}}
+                    {{userData?.lastName}}
                 </mat-card-content>
             </mat-card>
             <mat-card class="w-full">
-                <mat-card-header class="text-sm">
+                <mat-card-header class="text-xs sm:text-sm">
                     <mat-card-subtitle>Email</mat-card-subtitle>
                 </mat-card-header>
-                <mat-card-content>
+                <mat-card-content class="text-xs md:text-sm">
                     {{userData?.email}}
                 </mat-card-content>
             </mat-card>
@@ -35,7 +37,7 @@
                 <mat-card-header class="text-sm">
                     <mat-card-subtitle>Multa</mat-card-subtitle>
                 </mat-card-header>
-                <mat-card-content>
+                <mat-card-content class="text-xs md:text-sm">
                     {{userData?.fine}}
                 </mat-card-content>
             </mat-card>
@@ -43,7 +45,7 @@
                 <mat-card-header class="text-sm">
                     <mat-card-subtitle>Bloqueado</mat-card-subtitle>
                 </mat-card-header>
-                <mat-card-content>
+                <mat-card-content class="text-xs md:text-sm">
                     {{userData?.blocked ? 'Sim' : 'Não'}}
                 </mat-card-content>
             </mat-card>
@@ -52,8 +54,8 @@
             <mat-card-header class="text-sm">
                 <mat-card-subtitle>Cargo</mat-card-subtitle>
             </mat-card-header>
-            <mat-card-content>
-                {{userData?.userRole}}
+            <mat-card-content class="text-xs md:text-sm">
+                {{userData?.userRole | titlecase}}
             </mat-card-content>
         </mat-card>
 
@@ -62,7 +64,7 @@
                 <mat-card-header class="text-sm">
                     <mat-card-subtitle>Cadastrado em</mat-card-subtitle>
                 </mat-card-header>
-                <mat-card-content>
+                <mat-card-content class="text-xs md:text-sm">
                     {{userData?.createdOn | date: 'dd-MMM-YYYY'}}
                 </mat-card-content>
             </mat-card>
@@ -72,7 +74,7 @@
             <mat-card-header class="text-sm">
                 <mat-card-subtitle>Livros cadastrados</mat-card-subtitle>
             </mat-card-header>
-            <mat-card-content>
+            <mat-card-content class="text-xs md:text-sm">
                 {{userData?.count}}
             </mat-card-content>
         </mat-card>

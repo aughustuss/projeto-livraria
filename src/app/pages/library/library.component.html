@@ -16,7 +16,7 @@
                     </mat-card-content>
                 </mat-card>
                 <mat-accordion multi="true">
-                    <mat-expansion-panel expanded="true" *ngFor="let list of bookCategoriesToDisplay">
+                    <mat-expansion-panel class="w-fit md:w-full" expanded="true" *ngFor="let list of bookCategoriesToDisplay">
 
                         <mat-expansion-panel-header>
                             <mat-panel-title class="text-primary font-bold text-base">{{list.category |
@@ -132,7 +132,7 @@
                 </form>
             </div>
         </mat-tab>
-        <mat-tab *ngIf="isAdmin()" label="Retornar Livro ">
+        <mat-tab label="Retornar Livro ">
             <div class="p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10">
                 <form (ngSubmit)="onSubmit()" [formGroup]="returnBookForm"
                     class="flex flex-col w-full md:w-[420px] lg:w-[700px] rounded-md shadow-sm mx-auto">

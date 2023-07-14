@@ -17,7 +17,7 @@ $primary-palette: (
   500: #a5cec2,
   600: #89bcad,
   700: #75b3a1,
-  800: #35836c,
+  800: #207a5f,
   900: #116149,
   contrast: (
     50: rgba(black, 0.87),
@@ -32,6 +32,32 @@ $primary-palette: (
     900: white,
   )
 );
+
+$secondary-palette: (
+  50: #fafafa,
+  100: #e6faeb,
+  200: #dffde7,
+  300: #c4ffd5,
+  400: #bff8cf,
+  500: #a5fcbd,
+  600: #9cfcb7,
+  700: #94fdb2,
+  800: #85f8a6,
+  900: #55FB85,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+);
+
 
 $accent-palette: (
   50: #fce4ec,
@@ -62,16 +88,18 @@ $accent-palette: (
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $projeto-livraria-primary: mat.define-palette($primary-palette, 900);
+$projeto-livraria-secondary: mat.define-palette($secondary-palette, 900);
 $projeto-livraria-accent: mat.define-palette($accent-palette, 500);
 
 // The warn palette is optional (defaults to red).
-$projeto-livraria-warn: mat.define-palette(mat.$red-palette);
+$projeto-livraria-warn: mat.define-palette($secondary-palette, 900);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
 $projeto-livraria-theme: mat.define-light-theme((
   color: (
     primary: $projeto-livraria-primary,
+    secondary: $projeto-livraria-secondary,
     accent: $projeto-livraria-accent,
     warn: $projeto-livraria-warn,
   )

@@ -53,4 +53,10 @@ export interface DialogData {
 export class EmailToConfirm {
     public email!: string;
     public emailToken!:string;
+};
+
+export interface Advantages {
+    title: string,
+    content: string,
+    icon: string,
 }

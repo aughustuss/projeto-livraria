@@ -11,12 +11,11 @@ import { ConfirmationComponent } from './pages/confirmation/confirmation.compone
 
 const routes: Routes = [
   {path: 'library',component: LibraryComponent, canActivate: [authGuard]},
-  {path: 'books', component: BooksComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'profile/:id', component: ProfileComponent},
+  {path: 'profile/:id', component: ProfileComponent, canActivate: [authGuard]},
   {path: 'confirmAccount', component: ConfirmationComponent}
 ];
 

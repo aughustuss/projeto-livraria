@@ -8,22 +8,18 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LibraryComponent } from './pages/library/library.component';
 import { HomeComponent } from './pages/home/home.component';
-import { BooksComponent } from './pages/books/books.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { ConfirmationComponent } from './pages/confirmation/confirmation.component'; 
-import { NativeDateModule } from '@angular/material/core';
-
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    BooksComponent,
   ],
   imports: [
+    HomeComponent,
     ProfileComponent,
     FooterComponent,
     ConfirmationComponent,
