@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { ConfirmationComponent } from './pages/confirmation/confirmation.component'; 
+import { NativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
