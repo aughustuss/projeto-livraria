@@ -39,8 +39,9 @@
                 </button>
                 <mat-error class="text-xs" *ngIf="ConfirmPassword.invalid">{{getConfirmPasswordError()}}</mat-error>
             </mat-form-field>
-            <button type="submit" class="w-full" mat-flat-button color="primary">
-                Cadastrar
+            <button type="submit" class="w-full" mat-flat-button [disabled]="isRegistering" color="primary">
+                {{!isRegistering ? 'Cadastrar' : '' }}
+                <mat-spinner style="height: 20px; width: 20px;" *ngIf="isRegistering"></mat-spinner>
             </button>
         </form>
         <div class="self-end text-xs">

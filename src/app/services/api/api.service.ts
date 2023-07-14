@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
-import { Book, User } from 'src/models';
+import { Book, EmailToConfirm, User } from 'src/models';
 
 @Injectable({
   providedIn: 'root'
@@ -61,11 +61,19 @@ export class ApiService {
     return this.http.put<any>(`${this.baseUrl}User/unblockUser/${userID}`, {});
   }
 
-  enableUser(id: number){
-
+  enableUser(userID: number){
+    return this.http.put<any>(`${this.baseUrl}User/enableUser/${userID}`, {});
   };
+
+  disableUser(userID: number){
+    return this.http.put<any>(`${this.baseUrl}User/disableUser/${userID}`, {});
+  }
 
   deleteBookByID(bookID: number){
     return this.http.delete<any>(`${this.baseUrl}Books/deleteBook/${bookID}`);
+  }
+
+  confirmUserEmail(emailToConfirmObj: EmailToConfirm){
+    return this.http.post<any>(`${this.baseUrl}User/confirm-email`, emailToConfirmObj)
   }
 }

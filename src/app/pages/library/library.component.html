@@ -1,4 +1,4 @@
-<section class="relative">
+<section class="relative pt-20">
     <mat-tab-group aria-orientation="vertical" class=" text-sm min-h-screen">
         <mat-tab label="Ver Livros">
             <div class="p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10 flex flex-col gap-y-5">
@@ -254,7 +254,7 @@
 
                     <ng-container matColumnDef="active">
                         <th mat-header-cell *matHeaderCellDef>Está ativo</th>
-                        <td mat-cell *matCellDef="let el">{{!el.active? 'Sim' : 'Não'}}</td>
+                        <td mat-cell *matCellDef="let el">{{el.active? 'Sim' : 'Não'}}</td>
                     </ng-container>
 
                     <ng-container matColumnDef="created on">
@@ -269,8 +269,8 @@
                                 <button (click)="blockUser(el)" mat-flat-button color="primary">
                                     {{el.blocked ? 'Desbloquear' : 'Bloquear'}}
                                 </button>
-                                <button mat-flat-button color="primary">
-                                    {{el.active ? 'Ativar' : 'Desativar'}}
+                                <button mat-flat-button color="primary" (click)="enableUser(el)">
+                                    {{!el.active ? 'Ativar' : 'Desativar'}}
                                 </button>
                             </div>
                         </td>

@@ -19,8 +19,9 @@
                 <mat-error class="text-xs" *ngIf="Password.invalid">{{getPasswordError()}}</mat-error>
             </mat-form-field>
 
-            <button type="submit" class="w-full" color="primary" mat-flat-button>
-                Entrar
+            <button type="submit" class="w-full" color="primary" [disabled]="isLogginIn" mat-flat-button>
+                {{!isLogginIn ? 'Entrar' : ''}}
+                <mat-spinner style="width: 20px; height: 20px;" *ngIf="isLogginIn"></mat-spinner>
             </button>
         </form>
         <div class="self-end text-xs">

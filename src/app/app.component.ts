@@ -4,14 +4,13 @@ import { NavigationEnd, NavigationStart, Router } from '@angular/router';
   selector: 'app-root',
   templateUrl: './app.component.html',
 })
-export class AppComponent{
+export class AppComponent {
   title = 'projeto-livraria';
   isToggled: boolean = false;
   isSemiToggled: boolean = true;
-  showSideNav: boolean = true;
   showHeader: boolean = true;
   showFooter: boolean = true;
-  
+
   constructor(private router: Router) {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
@@ -21,18 +20,8 @@ export class AppComponent{
   }
 
   checkPath(url: string) {
-    if (
-      url === '' ||
-      url === '/home' ||
-      url === '/login' ||
-      url === '/register'
-    ) {
-      this.showSideNav = false;
-    } else {
-      this.showSideNav = true;
-    }
 
-    if (url === '/login' || url === '/register') {
+    if (url.startsWith('/login') || url.startsWith('/register') || url.startsWith('/confirmAccount')) {
       this.showHeader = false;
       this.showFooter = false;
     } else {

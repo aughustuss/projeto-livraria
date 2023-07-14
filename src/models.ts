@@ -49,3 +49,8 @@ export interface DialogData {
     bookID: number;
     deleteBookErrMsg: string;
 }
+
+export class EmailToConfirm {
+    public email!: string;
+    public emailToken!:string;
+}

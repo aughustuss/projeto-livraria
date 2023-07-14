@@ -9,15 +9,17 @@ import { CommonModule } from '@angular/common';
 import ValidateFormFields from 'src/app/helpers/formValidate';
 import { ApiService } from 'src/app/services/api/api.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatIconModule, RouterModule, CommonModule],
+  imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatIconModule, RouterModule, CommonModule, MatProgressSpinnerModule],
 })
 export class LoginComponent implements OnInit {
   hidePass: boolean = true;
+  isLogginIn: boolean = false;
+
   public loginForm!: FormGroup
   loginErrorMsg: string = "";
   constructor(
@@ -54,6 +56,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.loginForm.valid) {
+      this.isLogginIn = true;
       this.api.login(this.loginForm.value).subscribe({
         next: (res => {
           const accessToken = res.accessToken;
@@ -61,9 +64,11 @@ export class LoginComponent implements OnInit {
           const userPayload = this.auth.getUserInfoFromToken();
           window.sessionStorage.setItem("userPayload", JSON.stringify(userPayload));
           console.log(userPayload);
+          this.isLogginIn = false;
           this.route.navigate(['']);
         }),
         error: (err) => {
+          this.isLogginIn = false;
           this.loginErrorMsg = err.error.message;
         }
       })

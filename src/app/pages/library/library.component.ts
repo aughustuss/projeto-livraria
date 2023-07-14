@@ -16,7 +16,7 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 import ValidateFormFields from 'src/app/helpers/formValidate';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from 'src/app/components/dialog/dialog.component'; 
+import { DialogComponent } from 'src/app/components/dialog/dialog.component';
 import { MessagesService } from 'src/app/services/messages/messages.service';
 
 @Component({
@@ -29,12 +29,12 @@ export class LibraryComponent implements OnInit {
   public returnBookForm!: FormGroup;
   public registerBookForm!: FormGroup;
   public deleteBookForm!: FormGroup;
-  
+
 
   returnBookFormErrMsg: string = "";
   deleteBookErrMsg: string = "";
   registerBookErrMsg: string = "";
-  
+
   userData: any;
   availableBooks: Book[] = [];
   bookCategoriesToDisplay: BookCategory[] = [];
@@ -48,7 +48,7 @@ export class LibraryComponent implements OnInit {
     'available',
     'order'
   ]
-  
+
   userOrders: Book[] = [];
   userOrdersColumns: string[] = [
     'id',
@@ -60,7 +60,7 @@ export class LibraryComponent implements OnInit {
     'orderDate',
     'ordered',
   ]
-  
+
   userBooks: Book[] = [];
   userBooksColumns: string[] = [
     'id',
@@ -83,7 +83,7 @@ export class LibraryComponent implements OnInit {
     'date',
     'returned'
   ];
-  
+
   usersToDisplay: User[] = [];
   allUsersColumns: string[] = [
     'id',
@@ -104,9 +104,9 @@ export class LibraryComponent implements OnInit {
     private snack: MatSnackBar,
     public dialog: MatDialog,
     private msg: MessagesService
-    ) { }
-    
-    ngOnInit(): void {
+  ) { }
+
+  ngOnInit(): void {
     this.userPayload = this.auth.getUserInfoFromStorage();
     this.userID = this.userPayload?.nameid;
     this.api.getUserInfo(this.userID).subscribe({
@@ -138,12 +138,12 @@ export class LibraryComponent implements OnInit {
 
   openDialog() {
     const dialogRef = this.dialog.open(DialogComponent, {
-      data: { bookID: this.DeletedBookID.value, deleteBookErrMsg: this.deleteBookErrMsg},
+      data: { bookID: this.DeletedBookID.value, deleteBookErrMsg: this.deleteBookErrMsg },
     });
     dialogRef.afterClosed().subscribe(res => this.deleteBookErrMsg = this.msg.getErrorMessage());
   }
-  isAdmin(): boolean{
-    return this.userPayload?.role === 'admin'  
+  isAdmin(): boolean {
+    return this.userPayload?.role === 'admin'
   }
   isBlocked() {
     let blocked = this.userData?.blocked;
@@ -212,7 +212,7 @@ export class LibraryComponent implements OnInit {
   getUserOrders(userID: number) {
     this.api.getUserOrders(userID).subscribe({
       next: (res: Book[]) => {
-        this.userOrders = res;
+        if (res) this.userOrders = res;
       },
       error: (err) => {
         console.log(err);
@@ -220,7 +220,7 @@ export class LibraryComponent implements OnInit {
     });
   };
 
-  getUserBooks(userID: number){
+  getUserBooks(userID: number) {
     this.api.getUserBooks(userID).subscribe({
       next: (res: Book[]) => {
         this.userBooks = res;
@@ -269,7 +269,7 @@ export class LibraryComponent implements OnInit {
     return this.deleteBookForm.get('DeletedBookID') as FormControl
   }
 
-  get BookTitle(): FormControl{
+  get BookTitle(): FormControl {
     return this.registerBookForm.get('BookTitle') as FormControl
   }
 
@@ -309,28 +309,28 @@ export class LibraryComponent implements OnInit {
     return ''
   }
 
-  getBookTitleError(){
-    if(this.BookTitle.hasError('required')) return 'Preencha o nome do livro'
-    return this.BookTitle.hasError('maxLength') ? 'Máximo de 40 caractéres': ''
+  getBookTitleError() {
+    if (this.BookTitle.hasError('required')) return 'Preencha o nome do livro'
+    return this.BookTitle.hasError('maxLength') ? 'Máximo de 40 caractéres' : ''
   }
 
-  getBookAuthorError(){
-    if(this.BookAuthor.hasError('required')) return 'Preencha o nome do autor'
+  getBookAuthorError() {
+    if (this.BookAuthor.hasError('required')) return 'Preencha o nome do autor'
     return this.BookAuthor.hasError('maxLength') ? 'Máximod e 50 caractéres' : ''
   }
 
-  getBookPriceError(){
-    if(this.BookPrice.hasError('required')) return 'Preencha o preço do livro'
+  getBookPriceError() {
+    if (this.BookPrice.hasError('required')) return 'Preencha o preço do livro'
     return ''
   }
 
-  getBookCategoryError(){
-    if(this.BookCategory.hasError('required')) return 'Preencha a categoria do livro'
+  getBookCategoryError() {
+    if (this.BookCategory.hasError('required')) return 'Preencha a categoria do livro'
     return this.BookCategory.hasError('maxLength') ? 'Máximo de 30 caractéres' : ''
   }
 
-  getBookSubCategoryError(){
-    if(this.BookSubCategory.hasError('required')) return 'Preencha a subcategoria do livro'
+  getBookSubCategoryError() {
+    if (this.BookSubCategory.hasError('required')) return 'Preencha a subcategoria do livro'
     return this.BookSubCategory.hasError('maxLength') ? 'Máximo de 30 caractéres' : ''
   }
 
@@ -362,8 +362,8 @@ export class LibraryComponent implements OnInit {
       }
     })
   };
-  registerBook(){
-    if(this.registerBookForm.valid){
+  registerBook() {
+    if (this.registerBookForm.valid) {
       let bookObj: Book = {
         id: 0,
         title: this.registerBookForm.get('BookTitle')?.value,
@@ -394,7 +394,7 @@ export class LibraryComponent implements OnInit {
     if (user.blocked) {
       this.api.unblockUser(user.id).subscribe({
         next: (res) => {
-          if (res.message == 'Desbloqueado') user.blocked == false;
+          if (res.message == 'Desbloqueado') user.blocked = false;
           this.getAllUsers();
           this.getAllBooks();
         },
@@ -405,7 +405,7 @@ export class LibraryComponent implements OnInit {
     } else {
       this.api.blockUser(user.id).subscribe({
         next: (res) => {
-          if (res.message == 'Bloqueado') user.blocked == true;
+          if (res.message == 'Bloqueado') user.blocked = true;
           this.getAllUsers();
           this.getAllBooks();
         },
@@ -415,5 +415,31 @@ export class LibraryComponent implements OnInit {
       })
     }
   };
+
+  enableUser(user: User) {
+    if (!user.active) {
+      this.api.enableUser(user.id).subscribe({
+        next: (res) => {
+          if (res.message === "Ativado" || res.message === "ativado") user.active = true;
+          this.getAllUsers();
+          this.getAllBooks();
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      })
+    } else {
+      this.api.disableUser(user.id).subscribe({
+        next: (res) => {
+          if (res.message === "Desativado" || res.message === "desativado") user.active = false;
+          this.getAllUsers();
+          this.getAllBooks();
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      })
+    }
+  }
 
 };

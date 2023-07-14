@@ -14,16 +14,18 @@ import { RegisterComponent } from './pages/register/register.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { DialogComponent } from './components/dialog/dialog.component';
+import { ConfirmationComponent } from './pages/confirmation/confirmation.component'; 
 
 @NgModule({
   declarations: [
-    FooterComponent,
     AppComponent,
     HomeComponent,
     BooksComponent,
-    ProfileComponent,
   ],
   imports: [
+    ProfileComponent,
+    FooterComponent,
+    ConfirmationComponent,
     DialogComponent,
     RegisterComponent,
     LoginComponent,

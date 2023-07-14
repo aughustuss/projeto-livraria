@@ -4,6 +4,7 @@ import {MatInputModule} from '@angular/material/input'
 import {MatButtonModule} from '@angular/material/button'
 import {MatIconModule} from '@angular/material/icon'
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar'
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import {FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators, FormControl, AbstractControlOptions} from '@angular/forms'
 
@@ -17,14 +18,14 @@ import { ApiService } from 'src/app/services/api/api.service';
   selector: 'app-register',
   templateUrl: './register.component.html',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatIconModule, RouterModule, CommonModule, MatSnackBarModule],
+  imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatIconModule, RouterModule, CommonModule, MatSnackBarModule, MatProgressSpinnerModule],
 })
 export class RegisterComponent implements OnInit {
   hidePass: boolean = true;
   hideConfirmPass: boolean = true;
   public registerForm!: FormGroup;
   registerFormErrMsg: string = "";
-
+  isRegistering: boolean = false;
   constructor(
     private fb: FormBuilder,
     private api: ApiService,
@@ -88,6 +89,7 @@ export class RegisterComponent implements OnInit {
 
   onSubmit(){
     if(this.registerForm.valid){
+      this.isRegistering = true;
       let userObj: User = {
         id: 0,
         firstName: this.registerForm.get('FirstName')?.value,
@@ -107,11 +109,12 @@ export class RegisterComponent implements OnInit {
             duration: 5000,
             horizontalPosition: 'center',
           })
-          this.route.navigate(['/login']);
+          this.isRegistering = false;
           this.registerForm.reset();
+          this.route.navigate(['/login']);
         }),
         error: (err) => {
-          this.registerFormErrMsg = err.error.message;
+          this.registerFormErrMsg = err?.error?.message;
         }
       })
     } else {

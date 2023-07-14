@@ -1,5 +1,5 @@
-import { Component, OnInit} from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { Component, OnInit, HostListener} from '@angular/core';
+import { RouterModule } from '@angular/router';
 import {MatToolbarModule} from '@angular/material/toolbar'
 import {MatSidenavModule} from '@angular/material/sidenav'
 import {MatIconModule} from '@angular/material/icon'
@@ -19,19 +19,25 @@ import { ApiService } from 'src/app/services/api/api.service';
 })
 export class HeaderComponent implements OnInit {
   isToggled: boolean = false;
+  windowSize: number = 0;
+  @HostListener('window:resize', ['$event'])
+  onWindowResize(event: any):void{
+    this.windowSize = event.target.innerWidth;
+  };
   public id: number = 0;
   public userPayload?: any;
   constructor(
     private auth: AuthService,
     private api: ApiService
-  ){}
-
-  ngOnInit(): void {
-    this.userPayload = this.auth.getUserInfoFromStorage();
-    this.id = this.userPayload?.nameid;
-  }
-
-  toggleSidenav(){
+    ){}
+    
+    ngOnInit(): void {
+      this.userPayload = this.auth.getUserInfoFromStorage();
+      this.id = this.userPayload?.nameid;
+      this.windowSize = window.innerWidth;
+    }
+    
+    toggleSidenav(){
     this.isToggled = !this.isToggled;
   }
 

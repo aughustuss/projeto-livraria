@@ -1,13 +1,25 @@
-<mat-toolbar class=" bg-primary sticky z-50 border border-b-secondary border-r-0 border-l-0 border-t-0 text-textColor">
-    <nav class="flex flex-row items-center justify-between w-full">
-        <div class="flex flex-col items-center gap-0 cursor-pointer" routerLink="/home">
-            <h1 class="text-3xl font-extrabold  tracking-wide">
-                BMS
+<header class=" bg-white fixed z-50 border border-b-borderColor border-r-0 border-l-0 border-t-0 text-primary py-4 w-full">
+    <nav class="flex flex-row items-center justify-between w-[95%] mx-auto">
+        <div class="flex flex-col items-center cursor-pointer" routerLink="/home">
+            <h1 class="text-2xl font-extrabold  tracking-wide flex flex-row items-center">
+                <mat-icon>book</mat-icon>BMS
             </h1>
             <p class="text-xs font-bold">BookAD Management System</p>
         </div>
-        <button mat-icon-button [matMenuTriggerFor]="accMenu">
-            <mat-icon>account_circle</mat-icon>
+        <div *ngIf="windowSize > 768" class="flex flex-row gap-x-8 items-center text-sm">
+            <a routerLink="/library">Configurações</a>
+            <a *ngIf="isLoggedIn()" routerLink="/profile/{{id}}">Minha conta</a>
+            <button *ngIf="!isLoggedIn()" mat-flat-button color="primary" routerLink="/login">
+                <span>Login</span>
+                <mat-icon >login</mat-icon>
+            </button>
+            <button *ngIf="isLoggedIn()" mat-flat-button color="primary" (click)="signOut()">    
+                <span>Logout</span>
+                <mat-icon>logout</mat-icon>
+            </button>
+        </div>
+        <button *ngIf="windowSize < 768" mat-icon-button [matMenuTriggerFor]="accMenu">
+            <mat-icon>menu</mat-icon>
         </button>
         <mat-menu #accMenu="matMenu" class="text-sm">
             <button *ngIf="!isLoggedIn()" routerLink="/login" mat-menu-item>
@@ -28,4 +40,4 @@
             </button>
         </mat-menu>
     </nav>
-</mat-toolbar>
+</header>
