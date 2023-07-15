@@ -92,7 +92,7 @@ $projeto-livraria-secondary: mat.define-palette($secondary-palette, 900);
 $projeto-livraria-accent: mat.define-palette($accent-palette, 500);
 
 // The warn palette is optional (defaults to red).
-$projeto-livraria-warn: mat.define-palette($secondary-palette, 900);
+$projeto-livraria-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
@@ -100,7 +100,7 @@ $projeto-livraria-theme: mat.define-light-theme((
   color: (
     primary: $projeto-livraria-primary,
     secondary: $projeto-livraria-secondary,
-    accent: $projeto-livraria-accent,
+    accent: $projeto-livraria-secondary,
     warn: $projeto-livraria-warn,
   )
 ));

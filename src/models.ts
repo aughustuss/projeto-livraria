@@ -55,8 +55,13 @@ export class EmailToConfirm {
     public emailToken!:string;
 };
 
-export interface Advantages {
+export interface Characteristics {
     title: string,
     content: string,
     icon: string,
+}
+
+export interface Details {
+    number: string;
+    subtitle: string;
 }

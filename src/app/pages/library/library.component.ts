@@ -59,6 +59,7 @@ export class LibraryComponent implements OnInit {
     'subCategory',
     'orderDate',
     'ordered',
+    'orderLimitDate'
   ]
 
   userBooks: Book[] = [];
@@ -148,6 +149,12 @@ export class LibraryComponent implements OnInit {
   isBlocked() {
     let blocked = this.userData?.blocked;
     return blocked;
+  }
+
+  addDays(date: Date){
+    const currentDate = new Date(date);
+    currentDate.setDate(currentDate.getDate() + 10);
+    return currentDate.toISOString().split('T')[0];
   }
   getAllBooks(): void {
     this.api.getAllBooks().subscribe({

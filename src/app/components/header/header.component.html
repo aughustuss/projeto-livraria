@@ -1,19 +1,19 @@
 <header (scroll)="onScroll()"
-    class="{{isTop ? 'border-0' : 'border border-b-borderColor'}} bg-bgWhite fixed z-50 border-r-0 border-l-0 border-t-0 text-secondaryTextColor py-4 w-full transition-all duration-200">
+    class="{{isTop ? 'border-0' : 'border border-b-borderColor'}} bg-bgWhite fixed z-50 border-r-0 border-l-0 border-t-0 text-secondaryTextColor py-6 w-full transition-all duration-200">
     <nav class="flex flex-row items-center justify-between w-[95%] mx-auto">
-        <h1 class="text-3xl font-extrabold  tracking-wide flex flex-row items-center">
-            <mat-icon color="warn">book</mat-icon>BMS
+        <h1 class="text-3xl font-extrabold  tracking-wide flex flex-row items-center cursor-pointer" routerLink="/home">
+            <mat-icon color="accent">book</mat-icon>BMS
         </h1>
         <div *ngIf="windowWidth > 768" class="flex flex-row gap-x-8 items-center text-base">
             <a routerLink="/home">Início</a>
             <a *ngIf="!isAdmin()" routerLink="/library">Livraria</a>
             <a *ngIf="isAdmin()" routerLink="/library">Configurações da livraria</a>
             <a *ngIf="isLoggedIn()" routerLink="/profile/{{id}}">Minha conta</a>
-            <button *ngIf="!isLoggedIn()" mat-flat-button color="warn" routerLink="/login">
+            <button *ngIf="!isLoggedIn()" mat-flat-button color="accent" routerLink="/login">
                 <span>Login</span>
                 <mat-icon>login</mat-icon>
             </button>
-            <button *ngIf="isLoggedIn()" mat-flat-button color="warn" (click)="signOut()">
+            <button *ngIf="isLoggedIn()" mat-flat-button color="accent" (click)="signOut()">
                 <span>Logout</span>
                 <mat-icon>logout</mat-icon>
             </button>

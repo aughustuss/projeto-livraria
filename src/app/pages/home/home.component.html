@@ -1,51 +1,128 @@
 <section class="min-h-screen flex flex-col w-full">
-    <div class="flex flex-col lg:flex-row pt-28 w-full justify-between">
-        <div class="flex flex-1 max-w-xl p-5">
-            <div class="flex flex-col gap-y-5 w-full">
+    <div class="flex flex-col md:flex-row pt-28 w-full justify-between">
+        <div class="flex flex-1 p-5">
+            <div class="flex flex-col gap-y-5 max-w-md">
                 <p class="text-xs uppercase text-secondaryTextColor font-bodyFont flex flex-row items-center gap-x-3">
                     <span class="text-tertiary font-extrabold">|</span> Books Management System
                 </p>
-                <div class="flex flex-col text-6xl leading-tight w-full font-headingFont">
-                    Impulsione os seus negócios. Adentre na nova geração de gerenciamento inteligente.
+                <div
+                    class="flex flex-col text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight w-full font-headingFont">
+                    Peça os seus livros favoritos na comodidade da sua casa. Adentre na nova geração.
                 </div>
-                <div class="text-secondaryTextColor font-bodyFont">
-                    <p class="text-xs md:text-sm lg:text-base">O BMS é a solução que te ajuda a manter o controle de
-                        todas as funcionalidades de sua livraria. Obtenha a
-                        autonomia e velocidade que está buscando em seu negócio.</p>
-                    <button routerLink="/register"
-                        class="text-sm font-bodyFont bg-tertiary text-black flex flex-row items-center gap-x-2 py-2 px-3 rounded-md border border-primary hover:bg-tertiary/80 transition duration-200">
-                        <span>Começar agora</span>
+                <div class="text-secondaryTextColor font-bodyFont flex flex-col gap-y-2">
+                    <p class="text-sm lg:text-base">
+                        O BMS é a solução criada para facilitar a integração entre as duas pontas, garantindo para o
+                        usuário, conforto
+                        ao realizar o seu pedido, facilidade de acesso às suas informações e para a Livraria Exemplo,
+                        maior alcance e segurança.
+                    </p>
+                    <button routerLink="/login"
+                        class="text-sm font-semibold bg-tertiary text-black flex flex-row items-center gap-x-2 py-2 px-5 rounded-md border border-primary hover:bg-tertiary/80 transition duration-200 w-fit">
+                        <span>Entrar agora</span>
                         <mat-icon>arrow_right_alt</mat-icon>
                     </button>
                 </div>
             </div>
         </div>
-        <div class="px-5 bg-secondary rounded-l-xl pt-20 w-[700px] h-[700px] shadow-md shadow-secondary/40">
-            <img src="../../../assets/reading.png" class="w-full h-full object-contain flex flex-1">
+        <div
+            class="px-5 flex flex-1 bg-secondary rounded-t-xl rounded-b-xl md:rounded-l-xl md:rounded-r-none pt-20 shadow-md shadow-secondary/40">
+            <img src="../../../assets/reading.png" class="w-full h-full object-contain ">
         </div>
     </div>
-    <div class="bg-secondary h-auto w-full mt-14">
-        <div class="p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10 flex flex-col gap-y-20">
-            <div class="flex flex-col gap-4">
-                <p class="text-sm md:text-lg lg:text-2xl text-offWhite font-semibold">Vantagens</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-2">
-                    <div *ngFor="let item of advantages"
-                        class="h-[120px] w-full bg-secondaryLigth rounded-xl hover:shadow-md hover:shadow-secondary/40 flex flex-row p-5 gap-x-4 items-center text-offWhite cursor-pointer transition duration-200">
+    <div class="bg-secondary h-auto w-full mt-14 rounded-t-xl rounded-b-xl">
+        <div class="flex flex-col gap-y-20">
+            <div class="flex flex-col gap-y-10 py-5 p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10 ">
+                <p class="text-xl md:text-2xl text-offWhite font-semibold">Vantagens</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 w-full gap-2">
+                    <div *ngFor="let advantage of advantages"
+                        class="h-[90px] md:h-[120px] w-full bg-secondaryLight rounded-xl hover:shadow-md hover:shadow-secondaryLight/70 flex flex-row p-2 gap-x-4 items-center text-offWhite cursor-pointer transition duration-200">
                         <div
-                            class="p-1 bg-tertiary text-black flex flex-col justify-center items-center rounded-xl h-16 w-16">
-                            <mat-icon class="scale-150">{{item.icon}}</mat-icon>
+                            class="p-1 bg-tertiary text-black flex flex-col justify-center items-center rounded-xl h-[50px] w-[50px] lg:h-[60px] lg:w-[60px]">
+                            <mat-icon class="scale-150">{{advantage.icon}}</mat-icon>
                         </div>
                         <div class="flex flex-col gap-y-2 justify-between max-w-[280px]">
-                            <p class="text-[11px] text-offWhite/80 uppercase font-bodyFont tracking-wide">{{item.title}}
+                            <p class="text-[11px] text-offWhite/80 uppercase font-bodyFont tracking-wide">
+                                {{advantage.title}}
                             </p>
-                            <p class="text-sm">{{item.content}}</p>
+                            <p class="text-xs md:text-sm">{{advantage.content}}</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div>
-                Mais coisa
+            <div class="w-full bg-secondaryLight min-h-[500px] flex flex-col text-offWhite justify-center">
+                <div class="p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10 grid grid-cols-2 md:grid-cols-4 gap-2">
+                    <div
+                        *ngFor="let detail of details"
+                        class="w-full h-[250px] bg-secondary rounded-xl shadow-md flex flex-col justify-center items-center p-2">
+                        <div class="flex flex-col font-headingFont">
+                            <p class="text-tertiary text-center text-5xl underline ">{{detail.number}}</p>
+                            <p class="text-3xl  text-center">{{detail.subtitle}}</p>
+                        </div>
+                    </div>
+                    
+                </div>
+                <p class="text-xs text-secondaryTextColor text-end">Números fictícios</p>
             </div>
+            <div class="flex flex-col gap-y-10 p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10 ">
+                <p class="text-2xl lg:text-3xl text-offWhite font-semibold text-center">Todas as
+                    funcionalidades</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div *ngFor="let funcionality of funcionalities"
+                        class="h-[200px] md:h-[240px] lg:h-[280px] w-full border border-secondaryLight rounded-xl flex flex-col p-5 gap-6 text-offWhite hover:bg-secondaryLight transition duration-200">
+                        <mat-icon class="text-tertiary scale-[2]">{{funcionality.icon}}</mat-icon>
+                        <p class="text-xl font-semibold">{{funcionality.title}}</p>
+                        <p class="text-tertiaryTextColor text-xs sm:text-sm md:text-base">{{funcionality.content}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col md:flex-row py-20 gap-5 text-offWhite justify-between">
+            <div
+                class="h-[700px] max-w-[800px] flex flex-1 p-5 bg-secondaryLight rounded-t-xl rounded-b-xl md:rounded-r-xl md:rounded-l-none shadow-md shadow-secondary/40">
+                <img src="../../../assets/management.png" class="w-full h-full object-contain">
+            </div>
+            <div class="flex flex-1 flex-col gap-y-6 px-5">
+                <div
+                    class="flex flex-col text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight w-full font-headingFont">
+                    Peça os seus livros favoritos na comodidade da sua casa. Adentre na nova geração.
+                </div>
+                <div class="flex flex-col gap-y-4">
+                    <p class="text-sm max-w-md text-tertiaryTextColor">Recomendado por todos os usuários de nossa loja
+                        física, o
+                        BMS tem como principal objetivo reduzir os gastos
+                        temporais, seja para você, nosso cliente, pedir o seu livro e para nós, Livraria Exemplo,
+                        diminuir os esforços
+                        físicos impostos no gerenciamento da nossa livraria.
+                    </p>
+                    <button routerLink="/register"
+                        class="text-sm bg-tertiary text-black flex flex-row items-center gap-x-2 py-2 px-5 rounded-md border border-primary hover:bg-tertiary/80 transition duration-200 w-fit font-semibold">
+                        <span class="text-sm">Crie agora a sua conta</span>
+                        <mat-icon>arrow_right_alt</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-col md:flex-row gap-y-20 my-14 justify-between">
+        <div class="flex flex-1 max-w-full md:max-w-lg p-5">
+            <div class="flex flex-col gap-y-6 w-full">
+                <p class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight w-full font-headingFont">Visite
+                    nossa loja física</p>
+                <div class="bg-secondary rounded-xl w-full h-[190px] p-5 flex flex-col justify-between text-offWhite">
+                    <mat-icon class="text-tertiary scale-[2]">location_on</mat-icon>
+                    <p class="font-semibold text-base lg:text-xl text-tertiaryTextColor">Rua Exemplar - Centro, SP - São
+                        Paulo</p>
+                    <button
+                        class="text-sm bg-tertiary text-black flex flex-row items-center gap-x-2 py-2 px-3 rounded-md border border-primary hover:bg-tertiary/80 transition duration-200 w-full justify-center font-semibold"
+                        color="accent">
+                        <span class="text-sm font-semibold">Como chegar</span>
+                        <mat-icon>arrow_right_alt</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-1 p-5 bg-secondary rounded-t-xl rounded-b-xl lg:rounded-l-xl lg:rounded-r-xl max-h-[700px] shadow-md shadow-secondary/40">
+            <img src="../../../assets/library.png" class="w-full h-full  object-contain" alt="Livraria Física">
         </div>
     </div>
 </section>

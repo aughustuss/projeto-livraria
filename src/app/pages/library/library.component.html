@@ -132,7 +132,7 @@
                 </form>
             </div>
         </mat-tab>
-        <mat-tab label="Retornar Livro ">
+        <mat-tab *ngIf="isAdmin()" label="Retornar Livro ">
             <div class="p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10">
                 <form (ngSubmit)="onSubmit()" [formGroup]="returnBookForm"
                     class="flex flex-col w-full md:w-[420px] lg:w-[700px] rounded-md shadow-sm mx-auto">
@@ -377,6 +377,10 @@
                         <td mat-cell *matCellDef="let el">{{el.orderDate | date: 'dd-MMM-YYYY'}}</td>
                     </ng-container>
 
+                    <ng-container matColumnDef="orderLimitDate">
+                        <th mat-header-cell *matHeaderCellDef>Data para devolução</th>
+                        <td mat-cell *matCellDef="let el">{{addDays(el.orderDate) | date: 'dd-MMM-YYYY' }}</td>
+                    </ng-container>
 
                     <ng-container matColumnDef="ordered">
                         <th mat-header-cell *matHeaderCellDef>Pedido devolvido</th>
