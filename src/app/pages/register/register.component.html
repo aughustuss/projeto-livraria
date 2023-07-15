@@ -1,7 +1,7 @@
 <main class="w-screen min-h-screen flex flex-col justify-center items-center">
     <div class="h-[600px] w-[340px] rounded-md flex flex-col gap-y-4 p-4 items-center">
-        <h1 class="text-4xl font-bold">Crie sua conta agora</h1>
-        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="w-full">
+        <h1 class="text-3xl md:text-4xl font-bold">Crie sua conta agora</h1>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="w-full flex flex-col gap-y-2">
 
             <mat-error *ngIf="registerFormErrMsg.length > 0">{{registerFormErrMsg}}</mat-error>
             <mat-form-field class="w-full">
@@ -39,7 +39,7 @@
                 </button>
                 <mat-error class="text-xs" *ngIf="ConfirmPassword.invalid">{{getConfirmPasswordError()}}</mat-error>
             </mat-form-field>
-            <button type="submit" class="w-full" mat-flat-button [disabled]="isRegistering" color="primary">
+            <button type="submit" class="w-full text-sm" mat-flat-button [disabled]="isRegistering" color="primary">
                 {{!isRegistering ? 'Cadastrar' : '' }}
                 <mat-spinner style="height: 20px; width: 20px;" *ngIf="isRegistering"></mat-spinner>
             </button>

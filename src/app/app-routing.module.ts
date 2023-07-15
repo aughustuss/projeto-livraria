@@ -8,6 +8,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { authGuard } from './services/guards/auth.guard';
 import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
+import { ResetComponent } from './pages/reset/reset.component';
+import { SendResetComponent } from './pages/send-reset/send-reset.component';
 
 const routes: Routes = [
   {path: 'library',component: LibraryComponent, canActivate: [authGuard]},
@@ -16,7 +18,9 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
   {path: 'profile/:id', component: ProfileComponent, canActivate: [authGuard]},
-  {path: 'confirmAccount', component: ConfirmationComponent}
+  {path: 'confirmAccount', component: ConfirmationComponent},
+  {path: 'resetPassword', component: ResetComponent},
+  {path: 'sendReset', component: SendResetComponent}
 ];
 
 @NgModule({

@@ -50,18 +50,25 @@ export interface DialogData {
     deleteBookErrMsg: string;
 }
 
-export class EmailToConfirm {
-    public email!: string;
-    public emailToken!:string;
-};
-
 export interface Characteristics {
     title: string,
     content: string,
     icon: string,
 }
 
+
 export interface Details {
     number: string;
     subtitle: string;
+}
+export class EmailToConfirm {
+    public email!: string;
+    public emailToken!:string;
+};
+
+export class ResetPassword {
+    public email!: string;
+    public resetPasswordToken!: string;
+    public newPassword!: string;
+    public confirmPassword!: string;
 }

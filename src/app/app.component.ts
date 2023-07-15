@@ -21,7 +21,8 @@ export class AppComponent {
 
   checkPath(url: string) {
 
-    if (url.startsWith('/login') || url.startsWith('/register') || url.startsWith('/confirmAccount')) {
+    if (url.startsWith('/login') || url.startsWith('/register') || url.startsWith('/confirmAccount') || 
+    url.startsWith('/resetPassword') || url.startsWith('/sendReset')) {
       this.showHeader = false;
       this.showFooter = false;
     } else {

@@ -21,11 +21,11 @@ export class HeaderComponent implements OnInit {
   isToggled: boolean = false;
   windowWidth: number = 0;
   isTop: boolean = true;
-  @HostListener('window:resize', ['$event'])
   @HostListener('window:scroll') onScroll(){
     if(window.scrollY == 0) this.isTop = true;
     else this.isTop = false;
   }
+  @HostListener('window:resize', ['$event'])
   onWindowResize(event: any): void {
     this.windowWidth = event.target.innerWidth;
   };
@@ -39,8 +39,6 @@ export class HeaderComponent implements OnInit {
     this.userPayload = this.auth.getUserInfoFromStorage();
     this.id = this.userPayload?.nameid;
     this.windowWidth = window.innerWidth;
-    
-    
   }
 
   isAdmin(): boolean {

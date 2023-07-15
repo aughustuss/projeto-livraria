@@ -1,0 +1,42 @@
+<main *ngIf="!isVerifying" class="min-h-screen flex flex-col justify-center items-center">
+    <form (ngSubmit)="onSubmit()" *ngIf="isTokenValid" [formGroup]="resetPasswordForm" class="w-[95%] sm:w-1/2 md:w-1/3 lg:w-[350px] h-[300px] flex flex-col gap-y-2 p-4">
+        <h1 class="font-extrabold text-3xl lg:text-4xl text-center md:text-start">Cadastre sua nova senha</h1>
+        <mat-form-field>
+            <mat-label>Nova senha</mat-label>
+            <input formControlName="FirstPassword" [type]="hideFirstPass ? 'password' : 'text'" matInput>
+            <button type="button" mat-icon-button matSuffix (click)="hideFirstPass = !hideFirstPass">
+                <mat-icon>
+                    {{hideFirstPass ? 'visibility_off' : 'visibility_on'}}
+                </mat-icon>
+            </button>
+            <mat-error class="text-xs" *ngIf="FirstPassword.invalid">{{getFirstPasswordError()}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Repita a senha</mat-label>
+            <input formControlName="LastPassword" [type]="hideLastPass ? 'password' : 'text'" matInput>
+            <button type="button" mat-icon-button matSuffix (click)="hideLastPass = !hideLastPass">
+                <mat-icon>
+                    {{hideLastPass ? 'visibility_off' : 'visibility_on'}}
+                </mat-icon>
+            </button>
+            <mat-error class="text-xs" *ngIf="LastPassword.invalid">{{getLastPasswordError()}}</mat-error>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="submit" class="text-sm" [disabled]="isSubmitting">
+            {{!isSubmitting ? 'Salvar' : ''}}
+            <mat-spinner style="width: 20px; height: 20px;" *ngIf="isSubmitting"></mat-spinner>
+        </button>
+
+    </form>
+    <div *ngIf="!isTokenValid" class="w-[95%] sm:w-1/2 md:w-1/3 lg:w-[400px] h-[300px] flex flex-col gap-y-2">
+        <h1 class="text-xl sm:text-2xl md:text-3xl text-center font-extrabold">Seu código de verificação está expirado, reenvie o email de redefinição de senha.</h1>
+        <button class="text-sm" type="button" (click)="resendPasswordEmail()" mat-flat-button color="primary" [disabled]="resendingPassEmail">
+            {{!resendingPassEmail ? 'Reenviar' : ''}}
+            <mat-spinner *ngIf="resendingPassEmail" style="width: 20px; height: 20px;"></mat-spinner>
+        </button>
+    </div>
+</main>
+<div *ngIf="isVerifying" class="w-screen h-screen flex flex-col justify-center items-center">
+    <mat-spinner style="width: 40px; height: 40px;"></mat-spinner>
+</div>

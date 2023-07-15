@@ -26,10 +26,6 @@
                 <mat-icon>home</mat-icon>
                 <span>Início</span>
             </button>
-            <button *ngIf="!isLoggedIn()" routerLink="/login" mat-menu-item>
-                <mat-icon>login</mat-icon>
-                <span>Login</span>
-            </button>
             <button routerLink="/library" mat-menu-item>
                 <mat-icon>apps</mat-icon>
                 <span>{{isAdmin() ? 'Configurações da livraria' : 'Livraria'}}</span>
@@ -38,6 +34,10 @@
             <button *ngIf="isLoggedIn()" routerLink="/profile/{{id}}" mat-menu-item>
                 <mat-icon>account_circle</mat-icon>
                 <span>Minha Conta</span>
+            </button>
+            <button *ngIf="!isLoggedIn()" routerLink="/login" mat-menu-item>
+                <mat-icon>login</mat-icon>
+                <span>Login</span>
             </button>
             <button mat-menu-item *ngIf="isLoggedIn()" (click)="signOut()">
                 <mat-icon>logout</mat-icon>

@@ -13,12 +13,16 @@ import { RegisterComponent } from './pages/register/register.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { DialogComponent } from './components/dialog/dialog.component';
-import { ConfirmationComponent } from './pages/confirmation/confirmation.component'; 
+import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
+import { ResetComponent } from './pages/reset/reset.component';
+import { SendResetComponent } from './pages/send-reset/send-reset.component';
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
+    SendResetComponent,
+    ResetComponent,
     HomeComponent,
     ProfileComponent,
     FooterComponent,

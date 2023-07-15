@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
-import { Book, EmailToConfirm, User } from 'src/models';
+import { Book, EmailToConfirm, ResetPassword, User } from 'src/models';
 
 @Injectable({
   providedIn: 'root'
@@ -75,5 +75,25 @@ export class ApiService {
 
   confirmUserEmail(emailToConfirmObj: EmailToConfirm){
     return this.http.post<any>(`${this.baseUrl}User/confirm-email`, emailToConfirmObj)
+  }
+
+  sendResetPasswordEmail(email: string){
+    return this.http.post<any>(`${this.baseUrl}User/send-reset-password/${email}`,{})
+  };
+
+  resetPassword(resetPasswordObj: ResetPassword){
+    return this.http.post<any>(`${this.baseUrl}User/reset-password`, resetPasswordObj);
+  }
+
+  checkConfirmEmailTokenExpiration(email: string){
+    return this.http.post<any>(`${this.baseUrl}User/check-confirm-email-token-validity/${email}`, {});
+  }
+
+  checkResetPasswordEmailTokenExpiration(email: string){
+    return this.http.post<any>(`${this.baseUrl}User/check-reset-password-token-validity/${email}`, {})
+  }
+
+  resentResetPasswordEmail(email: string){
+    return this.http.post<any>(`${this.baseUrl}User/resend-reset-password/${email}`, {});
   }
 }

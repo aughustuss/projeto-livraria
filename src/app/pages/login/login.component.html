@@ -1,6 +1,6 @@
 <main class="w-screen min-h-screen flex flex-col justify-center items-center">
     <div class="h-[400px] w-[340px] rounded-md flex flex-col gap-y-4 p-4 items-center">
-        <h1 class="text-4xl font-extrabold">Faça o seu login</h1>
+        <h1 class="text-3xl md:text-4xl font-extrabold">Faça o seu login</h1>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="w-full">
             <mat-error class="text-xs" *ngIf="loginErrorMsg.length > 0">{{loginErrorMsg}}</mat-error>
 
@@ -18,15 +18,15 @@
                 </button>
                 <mat-error class="text-xs" *ngIf="Password.invalid">{{getPasswordError()}}</mat-error>
             </mat-form-field>
-
-            <button type="submit" class="w-full" color="primary" [disabled]="isLogginIn" mat-flat-button>
+            <p class="self-end text-xs pb-4">Esqueceu sua senha? <a class="underline" routerLink="/sendReset">Redefina agora</a></p>
+            <button type="submit" class="w-full text-sm" color="primary" [disabled]="isLogginIn" mat-flat-button>
                 {{!isLogginIn ? 'Entrar' : ''}}
                 <mat-spinner style="width: 20px; height: 20px;" *ngIf="isLogginIn"></mat-spinner>
             </button>
         </form>
-        <div class="self-end text-xs">
+        <p class="self-end text-xs">
             Ainda não possui uma conta? <a class="underline" routerLink="/register">Crie uma agora!</a>
-        </div>
+        </p>
     </div>
     <button routerLink="" class="absolute left-0 top-0 underline p-2">
         Início
