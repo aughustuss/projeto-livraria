@@ -1,14 +1,17 @@
 <footer
-    class="w-full bg-secondary shadow-md shadow-primary/30 py-6 flex flex-col justify-between min-h-[150px] text-textColor">
-    <section class="w-[95%] flex flex-row justify-between mx-auto items-center">
+    class="w-full bg-secondary shadow-md shadow-primary/30 py-6 flex flex-col justify-between min-h-[150px] text-textColor gap-y-6">
+    <section class="w-[80%] flex flex-col sm:flex-row justify-between mx-auto items-center gap-y-6">
         <div class="flex flex-col items-center  justify-center gap-0 cursor-pointer" routerLink="/home">
             <h1 class="text-3xl font-extrabold  tracking-wide flex flex-row items-center cursor-pointer" routerLink="/home">
                 <mat-icon color="accent">book</mat-icon>BMS
             </h1>
             <p class="text-xs font-bold">BookAD Management System</p>
         </div>
-        <div>
-            Links
+        <div class="flex flex-col gap-y-2 items-center text-tertiaryTextColor">
+            <a routerLink="/home">Início</a>
+            <a *ngIf="!isAdmin()" routerLink="/library">Livraria</a>
+            <a *ngIf="isAdmin()" routerLink="/library">Configurações da livraria</a>
+            <a *ngIf="isLoggedIn()" routerLink="/profile/{{id}}">Minha conta</a>
         </div>
     </section>
     <section class="text-xs text-center">

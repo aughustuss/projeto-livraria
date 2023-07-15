@@ -86,14 +86,22 @@ export class ApiService {
   }
 
   checkConfirmEmailTokenExpiration(email: string){
-    return this.http.post<any>(`${this.baseUrl}User/check-confirm-email-token-validity/${email}`, {});
+    return this.http.get<any>(`${this.baseUrl}User/check-confirm-email-token-validity/${email}`);
   }
 
   checkResetPasswordEmailTokenExpiration(email: string){
-    return this.http.post<any>(`${this.baseUrl}User/check-reset-password-token-validity/${email}`, {})
+    return this.http.get<any>(`${this.baseUrl}User/check-reset-password-token-validity/${email}`)
   }
 
-  resentResetPasswordEmail(email: string){
+  resendResetPasswordEmail(email: string){
     return this.http.post<any>(`${this.baseUrl}User/resend-reset-password/${email}`, {});
+  }
+
+  resendConfirmationEmail(email: string){
+    return this.http.post<any>(`${this.baseUrl}User/resend-confirmation-email/${email}`, {});
+  }
+
+  checkUserIsAlreadyVerified(email: string){
+    return this.http.get<any>(`${this.baseUrl}User/check-is-already-verified/${email}`);
   }
 }

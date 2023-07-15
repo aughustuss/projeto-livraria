@@ -115,6 +115,7 @@ export class RegisterComponent implements OnInit {
         }),
         error: (err) => {
           this.registerFormErrMsg = err?.error?.message;
+          this.isRegistering = false;
         }
       })
     } else {

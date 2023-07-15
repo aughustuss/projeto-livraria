@@ -110,7 +110,7 @@ export class ResetComponent implements OnInit {
   }
 
   resendPasswordEmail(){
-    this.api.resentResetPasswordEmail(this.userEmail).subscribe({
+    this.api.resendResetPasswordEmail(this.userEmail).subscribe({
       next: (res) => {
         this.snack.open("Email reenviado com sucesso.", "OK", {
           duration: 5000,
