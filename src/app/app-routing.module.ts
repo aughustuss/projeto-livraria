@@ -13,15 +13,15 @@ import { SendResetComponent } from './pages/send-reset/send-reset.component';
 import { routeGuard } from './services/guards/route.guard';
 
 const routes: Routes = [
-  {path: 'library',component: LibraryComponent, canActivate: [authGuard]},
-  {path: '', redirectTo: '/home', pathMatch: 'full'},
-  {path: 'home', component: HomeComponent},
-  {path: 'register', component: RegisterComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'profile/:id', component: ProfileComponent, canActivate: [authGuard]},
-  {path: 'confirmAccount', component: ConfirmationComponent, canActivate:[routeGuard]},
-  {path: 'resetPassword', component: ResetComponent, canActivate:[routeGuard]},
-  {path: 'sendReset', component: SendResetComponent}
+  { path: 'library', component: LibraryComponent, canActivate: [authGuard] },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'profile/:id', component: ProfileComponent, canActivate: [authGuard] },
+  { path: 'confirmAccount', component: ConfirmationComponent, canActivate: [routeGuard] },
+  { path: 'resetPassword', component: ResetComponent, canActivate: [routeGuard] },
+  { path: 'sendReset', component: SendResetComponent }
 ];
 
 @NgModule({

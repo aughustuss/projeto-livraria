@@ -109,8 +109,9 @@
                         <mat-error *ngIf="BookSubCategory.invalid">{{getBookSubCategoryError()}}</mat-error>
                     </mat-form-field>
 
-                    <button type="submit" mat-flat-button color="primary">
-                        Cadastrar
+                    <button type="submit" mat-flat-button color="primary" [disabled]="isRegisteringBook">
+                        {{!isRegisteringBook ? 'Cadastrar' : ''}}
+                        <mat-spinner *ngIf="isRegisteringBook" style="height: 20px; width: 20px;" ></mat-spinner>
                     </button>
 
                 </form>

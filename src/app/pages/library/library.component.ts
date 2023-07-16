@@ -18,18 +18,20 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from 'src/app/components/dialog/dialog.component';
 import { MessagesService } from 'src/app/services/messages/messages.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-library',
   templateUrl: './library.component.html',
   standalone: true,
-  imports: [MatTabsModule, MatExpansionModule, MatTableModule, MatButtonModule, MatIconModule, MatCardModule, MatFormFieldModule, CommonModule, MatInputModule, MatButtonToggleModule, FormsModule, ReactiveFormsModule, MatSnackBarModule],
+  imports: [MatTabsModule, MatExpansionModule, MatTableModule, MatButtonModule, MatIconModule, MatCardModule, MatFormFieldModule, CommonModule, MatInputModule, MatButtonToggleModule, FormsModule, ReactiveFormsModule, MatSnackBarModule, MatProgressSpinnerModule],
 })
 export class LibraryComponent implements OnInit {
   public returnBookForm!: FormGroup;
   public registerBookForm!: FormGroup;
   public deleteBookForm!: FormGroup;
 
+  isRegisteringBook: boolean = false;
 
   returnBookFormErrMsg: string = "";
   deleteBookErrMsg: string = "";
@@ -371,6 +373,7 @@ export class LibraryComponent implements OnInit {
   };
   registerBook() {
     if (this.registerBookForm.valid) {
+      this.isRegisteringBook = true;
       let bookObj: Book = {
         id: 0,
         title: this.registerBookForm.get('BookTitle')?.value,
@@ -388,9 +391,13 @@ export class LibraryComponent implements OnInit {
             horizontalPosition: 'center',
           });
           this.registerBookForm.reset();
+          this.registerBookForm.clearValidators();
+          this.registerBookForm.clearAsyncValidators();
+          this.isRegisteringBook = false;
         },
         error: (err) => {
           this.registerBookErrMsg = err.error.message;
+          this.isRegisteringBook = true;
         }
       })
     } else {
