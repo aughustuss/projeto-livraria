@@ -32,6 +32,7 @@ export class LibraryComponent implements OnInit {
   public deleteBookForm!: FormGroup;
 
   isRegisteringBook: boolean = false;
+  isLoadingEverything: boolean = false;
 
   returnBookFormErrMsg: string = "";
   deleteBookErrMsg: string = "";
@@ -110,6 +111,7 @@ export class LibraryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.isLoadingEverything = true;
     this.userPayload = this.auth.getUserInfoFromStorage();
     this.userID = this.userPayload?.nameid;
     this.api.getUserInfo(this.userID).subscribe({
@@ -136,7 +138,10 @@ export class LibraryComponent implements OnInit {
       BookPrice: ['', Validators.required],
       BookCategory: ['', Validators.compose([Validators.required, Validators.maxLength(30)])],
       BookSubCategory: ['', Validators.compose([Validators.required, Validators.maxLength(30)])],
-    })
+    });
+    setTimeout(() => {
+      this.isLoadingEverything = false;
+    }, 2000);
   };
 
   openDialog() {
@@ -153,7 +158,7 @@ export class LibraryComponent implements OnInit {
     return blocked;
   }
 
-  addDays(date: Date){
+  addDays(date: Date) {
     const currentDate = new Date(date);
     currentDate.setDate(currentDate.getDate() + 10);
     return currentDate.toISOString().split('T')[0];

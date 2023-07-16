@@ -1,4 +1,4 @@
-<section class="relative pt-20">
+<section class="relative pt-20" *ngIf="!isLoadingEverything">
     <mat-tab-group aria-orientation="vertical" class=" text-sm min-h-screen">
         <mat-tab label="Ver Livros">
             <div class="p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10 flex flex-col gap-y-5">
@@ -396,3 +396,6 @@
     </mat-tab-group>
     
 </section>
+<div *ngIf="isLoadingEverything" class="w-screen h-screen flex flex-col justify-center items-center">
+    <mat-spinner *ngIf="isLoadingEverything" style="width: 40px; height: 40px;"></mat-spinner>
+</div>
