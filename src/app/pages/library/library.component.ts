@@ -199,8 +199,8 @@ export class LibraryComponent implements OnInit {
     this.updateList();
     if (val.length > 0) {
       this.bookCategoriesToDisplay = this.bookCategoriesToDisplay.filter((cat) => {
-        cat.books = cat.books.filter((book) => {
-          return book.title.toLowerCase().includes(val) || book.author.toLowerCase().includes(val);
+        cat.books = cat?.books?.filter((book) => {
+          return book?.title?.toLowerCase().includes(val) || book?.author?.toLowerCase().includes(val);
         })
         return cat.books.length > 0;
       });
