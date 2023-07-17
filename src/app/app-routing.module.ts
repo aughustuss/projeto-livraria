@@ -10,13 +10,14 @@ import { ConfirmationComponent } from './pages/confirmation/confirmation.compone
 import { ResetComponent } from './pages/reset/reset.component';
 import { SendResetComponent } from './pages/send-reset/send-reset.component';
 import { routeGuard } from './services/guards/route.guard';
+import { loginGuard } from './services/guards/login.guard';
 
 const routes: Routes = [
   { path: 'library', component: LibraryComponent, canActivate: [authGuard] },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent, canActivate: [loginGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [loginGuard] },
   { path: 'profile/:id', component: ProfileComponent, canActivate: [authGuard] },
   { path: 'confirmAccount', component: ConfirmationComponent, canActivate: [routeGuard] },
   { path: 'resetPassword', component: ResetComponent, canActivate: [routeGuard] },
