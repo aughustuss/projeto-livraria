@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
           const accessToken = res.accessToken;
           if (accessToken) this.auth.setUserToSessionStorage(accessToken);
           const userPayload = this.auth.getUserInfoFromToken();
-          window.sessionStorage.setItem("userPayload", JSON.stringify(userPayload));
+          localStorage.setItem("userPayload", JSON.stringify(userPayload));
           console.log(userPayload);
           this.isLogginIn = false;
           this.route.navigate(['']);
