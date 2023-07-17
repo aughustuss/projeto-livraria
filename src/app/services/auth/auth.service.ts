@@ -12,10 +12,10 @@ export class AuthService {
   }
 
   setUserToSessionStorage(token: string) {
-    window.sessionStorage.setItem('user', token);
+    localStorage.setItem('user', token);
   }
   getUserFromSessionStorage() {
-    return window.sessionStorage.getItem('user');
+    return localStorage.getItem('user');
   }
 
   getUserInfoFromToken() {
@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   getUserInfoFromStorage(){
-    return JSON.parse(window.sessionStorage.getItem("userPayload")!);
+    return JSON.parse(localStorage.getItem("userPayload")!);
   }
 
   isLoggedIn(){
@@ -33,7 +33,7 @@ export class AuthService {
   }
 
   signOut(){
-    window.sessionStorage.clear();
+    localStorage.clear();
     this.router.navigate(['/login']);
   }
 }
