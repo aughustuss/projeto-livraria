@@ -1,27 +1,61 @@
-# ProjetoLivraria
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.3.
+# BookAD Management System
+ 
+Uma aplicação completa de uma biblioteca que permite ao usuário, a visualização de livros cadastrados, realizar um pedido e visualizar o seu históricos. Para os administradores, é possível o gerenciamento de toda a aplicação.
+## Extra
 
-## Development server
+Para testar o projeto com uma conta de administrador, entre em contato com augustodpmenezes@gmail.com para realizar a solicitação do envio das credenciais.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## Stack utilizada
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+**Front-end:** AngularJS e TailwinCSS
 
-## Build
+**Back-end:** C# e pacote .NET/ ASP/NET
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Funcionalidades
 
-## Running end-to-end tests
+- Cadastro de usuário
+- Login de usuário
+- Redefinição de senha do usuário
+- Envio de e-mail para redefinição
+- Confirmação de conta 
+- Envio de e-mail para confirmação de conta
+- Edição de estados
+- Cadastro de livros
+- Remoção de livros
+- Validação dos dados
+- Token JWT e RefreshToken
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Instalação
 
-## Further help
+Instale projeto-livraria
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```bash
+  npm i
+```
+
+```bash
+  pnpm i
+```
+
+```bash
+  yarn add
+```
+
+Rode projeto-livraria
+
+```bash
+  ng serve -o
+```
+## Link para o projeto 
+
+https://projeto-livraria-ten.vercel.app/home
+
+## Dependências utilizadas
+
+- @auth0/angular-jwt
+- @angular/material
+- Demais dependências são instaladas por padrão pelo Angular CLI 16.3
