@@ -59,7 +59,7 @@ export class ConfirmationComponent implements OnInit {
       });
     }
 
-    if (!this.isTokenValid && !this.isUserAlreadyVerified) {
+    if (this.isTokenValid && !this.isUserAlreadyVerified) {
       this.emailToConfirmModel.email = this.emailToConfirm;
       this.emailToConfirmModel.emailToken = this.emailToken;
       if (this.emailToConfirmModel.email && this.emailToConfirmModel.emailToken) {
